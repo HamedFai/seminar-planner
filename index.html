@@ -1,225 +1,635 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<title>Geo Crew Seminar Planner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geotech Seminar Planner</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #dbe3ee;
+      --accent: #1f5fbf;
+      --accent-soft: #eaf2ff;
+      --ok: #e8f6ee;
+      --warn: #fff4df;
+      --ready: #dff3e6;
+      --pending: #fff0d8;
+      --draft: #eef2f7;
+      --shadow: 0 10px 28px rgba(18, 40, 76, 0.08);
+      --radius: 18px;
+    }
 
-<style>
+    * { box-sizing: border-box; }
 
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f8;
-    margin:40px;
-}
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f7f9fc 0%, #eef3fa 100%);
+      color: var(--text);
+    }
 
-.container{
-    max-width:900px;
-    margin:auto;
-}
+    .wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 32px 18px 48px;
+    }
 
-h1{
-    margin-bottom:4px;
-}
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
 
-.subtitle{
-    color:#666;
-    margin-bottom:30px;
-}
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
 
-button{
-    padding:8px 14px;
-    margin-right:8px;
-    margin-bottom:15px;
-    border:none;
-    border-radius:5px;
-    background:#2c7be5;
-    color:white;
-    cursor:pointer;
-}
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+    }
 
-button:hover{
-    background:#1a5fc4;
-}
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-}
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
 
-th, td{
-    padding:10px;
-    border-bottom:1px solid #ddd;
-    text-align:left;
-}
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
 
-th{
-    background:#f0f2f5;
-}
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
 
-.member-list{
-    margin-top:40px;
-    background:white;
-    padding:20px;
-    border-radius:6px;
-}
+    .meta-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fbfdff;
+    }
 
-</style>
+    .label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
 
+    .value {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+    }
+
+    .toolbar input, .toolbar select {
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+
+    .toolbar input {
+      min-width: 230px;
+      flex: 1 1 260px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    .primary { background: var(--accent); color: white; }
+    .secondary { background: #eef3f9; color: var(--text); }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      background: #fff;
+    }
+
+    .field textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .full { grid-column: 1 / -1; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fbff;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .draft { background: var(--draft); }
+    .pending { background: var(--pending); }
+    .ready { background: var(--ready); }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .member-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .member-list li {
+      margin: 0 0 8px;
+      break-inside: avoid;
+    }
+
+    @media (max-width: 820px) {
+      .top-grid, .form-grid, .meta {
+        grid-template-columns: 1fr;
+      }
+
+      .member-list { columns: 1; }
+      .wrap { padding: 18px 14px 36px; }
+      .hero, .card { padding: 18px; }
+    }
+  </style>
 </head>
-
-
 <body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">2026 Series</div>
+      <h1>Geotech Seminar Planner</h1>
+    </section>
 
-<div class="container">
+    <div class="top-grid">
+      <section class="card">
+        <h2>Seminar Overview</h2>
+        <div class="meta">
+          <div class="meta-item">
+            <span class="label">Frequency</span>
+            <span class="value">Every second Tuesday</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Time</span>
+            <span class="value">21:00 Sydney time</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Format</span>
+            <span class="value">10–30 min talk + Q&amp;A</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Audience</span>
+            <span class="value">Geo Crew</span>
+          </div>
+        </div>
+      </section>
 
-<h1>Geo Crew Seminar Planner</h1>
-<div class="subtitle">Geo Crew</div>
+      <section class="card">
+        <h2>Team Members</h2>
+        <ul id="memberList" class="member-list"></ul>
+      </section>
+    </div>
 
+    <section class="card" style="margin-bottom: 22px;">
+      <h2>Add or Update a Seminar</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="date">Date</label>
+          <input id="date" type="date" />
+        </div>
+        <div class="field">
+          <label for="presenter">Presenter</label>
+          <select id="presenter"></select>
+        </div>
+        <div class="field full">
+          <label for="topic">Topic</label>
+          <input id="topic" type="text" placeholder="Enter seminar topic" />
+        </div>
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status">
+            <option>Draft</option>
+            <option>Planned</option>
+            <option>Ready</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="slides">Slides link</label>
+          <input id="slides" type="url" placeholder="https://..." />
+        </div>
+        <div class="field full">
+          <label for="notes">Notes</label>
+          <textarea id="notes" placeholder="Short notes, support needed, or reminders"></textarea>
+        </div>
+      </div>
 
-<h2>Planned Sessions</h2>
+      <div class="toolbar" style="margin-top: 16px;">
+        <button class="primary" id="saveBtn">Save entry</button>
+        <button class="secondary" id="clearBtn" type="button">Clear form</button>
+      </div>
+    </section>
 
-<button onclick="importJSON()">Import JSON</button>
-<button onclick="exportJSON()">Export JSON</button>
+    <section class="card">
+      <h2>Planned Sessions</h2>
+      <div class="toolbar">
+        <input id="search" type="text" placeholder="Search by presenter, topic, or date" />
+        <select id="filterStatus">
+          <option value="">All statuses</option>
+          <option value="Draft">Draft</option>
+          <option value="Planned">Planned</option>
+          <option value="Ready">Ready</option>
+        </select>
+        <button class="secondary" id="exportBtn" type="button">Export JSON</button>
+      </div>
 
-<input type="file" id="fileInput" accept=".json" style="display:none">
+      <div class="toolbar" style="margin-top: 0; margin-bottom: 16px;">
+        <button class="secondary" id="importBtn" type="button">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json,.json" style="display:none;" />
+      </div>
 
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Presenter</th>
+              <th>Topic</th>
+              <th>Status</th>
+              <th>Slides</th>
+              <th>Notes</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
 
-<table id="seminarTable">
+  <script>
+    const members = [
+      "Hoang Nguyen",
+      "Vinnie Charrot",
+      "Siti Salwa Samigin",
+      "Federica Santoro",
+      "Kamil Adamek",
+      "Mohd Firdaus Bin Faudz",
+      "Dhiyyaz Razip",
+      "Karol Filipowski",
+      "Hamed Faizi",
+      "Erey Helmy",
+      "Ahmad Tawfiq",
+      "Salim Silveira",
+      "Mateus Belbuche",
+      "Cid Dieguez",
+      "Lucas Marques",
+      "Habibuzaid Bahari",
+      "Dai Nelsey"
+    ];
 
-<thead>
-<tr>
-<th>Date</th>
-<th>Presenter</th>
-<th>Topic</th>
-<th>Status</th>
-<th>Slides</th>
-<th>Notes</th>
-</tr>
-</thead>
+    const storageKey = "geotech-seminar-planner-simple";
+    let editingId = null;
 
-<tbody>
-</tbody>
+    const presenterEl = document.getElementById('presenter');
+    const memberListEl = document.getElementById('memberList');
+    const tableBody = document.getElementById('tableBody');
 
-</table>
-
-
-
-<div class="member-list">
-
-<h3>Team Members</h3>
-
-<ul>
-<li>Hoang Nguyen</li>
-<li>Vinnie Charrot</li>
-<li>Siti Salwa Samigin</li>
-<li>Federica Santoro</li>
-<li>Kamil Adamek</li>
-<li>Mohd Firdaus Bin Faudz</li>
-<li>Dhiyyaz Razip</li>
-<li>Karol Filipowski</li>
-<li>Hamed Faizi</li>
-<li>Erey Helmy</li>
-<li>Ahmad Tawfiq</li>
-<li>Salim Silveira</li>
-<li>Mateus Belbuche</li>
-<li>Cid Dieguez</li>
-<li>Lucas Marques</li>
-<li>Habibuzaid Bahari</li>
-<li>Dai Nelsey</li>
-</ul>
-
-</div>
-
-</div>
-
-
-<script>
-
-let seminarData = [];
-
-
-function renderTable(){
-
-    const tbody = document.querySelector("#seminarTable tbody");
-    tbody.innerHTML = "";
-
-    seminarData.forEach(entry => {
-
-        let row = document.createElement("tr");
-
-        row.innerHTML = `
-            <td>${entry.date || ""}</td>
-            <td>${entry.presenter || ""}</td>
-            <td>${entry.topic || ""}</td>
-            <td>${entry.status || ""}</td>
-            <td>${entry.slides ? `<a href="${entry.slides}" target="_blank">Link</a>` : ""}</td>
-            <td>${entry.notes || ""}</td>
-        `;
-
-        tbody.appendChild(row);
-
+    members.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      presenterEl.appendChild(opt);
     });
 
-}
+    memberListEl.innerHTML = members.map(name => `<li>${escapeHtml(name)}</li>`).join('');
 
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
 
+    function getEntries() {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return [];
+      try {
+        const parsed = JSON.parse(saved);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
 
-function importJSON(){
+    function setEntries(entries) {
+      localStorage.setItem(storageKey, JSON.stringify(entries));
+    }
 
-    document.getElementById("fileInput").click();
+    function badgeClass(status) {
+      if (status === 'Ready') return 'ready';
+      if (status === 'Planned') return 'pending';
+      return 'draft';
+    }
 
-}
+    function formatDate(value) {
+      if (!value) return '';
+      const d = new Date(value + 'T00:00:00');
+      return d.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
 
+    function render() {
+      const q = document.getElementById('search').value.trim().toLowerCase();
+      const statusFilter = document.getElementById('filterStatus').value;
 
+      const entries = getEntries()
+        .slice()
+        .sort((a, b) => (a.date || '').localeCompare(b.date || ''))
+        .filter(item => {
+          const hay = [item.date, item.presenter, item.topic, item.notes].join(' ').toLowerCase();
+          const matchesText = !q || hay.includes(q);
+          const matchesStatus = !statusFilter || item.status === statusFilter;
+          return matchesText && matchesStatus;
+        });
 
-document.getElementById("fileInput").addEventListener("change", function(event){
+      tableBody.innerHTML = '';
 
-    const file = event.target.files[0];
+      if (!entries.length) {
+        tableBody.innerHTML = '<tr><td colspan="7" class="muted">No sessions found. Import a JSON file to begin.</td></tr>';
+        return;
+      }
 
-    if(!file) return;
+      for (const item of entries) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${formatDate(item.date)}</td>
+          <td>${escapeHtml(item.presenter)}</td>
+          <td>${escapeHtml(item.topic)}</td>
+          <td><span class="status ${badgeClass(item.status)}">${escapeHtml(item.status)}</span></td>
+          <td>${item.slides ? `<a href="${encodeURI(item.slides)}" target="_blank" rel="noopener noreferrer">Open</a>` : '<span class="muted">—</span>'}</td>
+          <td>${escapeHtml(item.notes || '—')}</td>
+          <td>
+            <div class="actions">
+              <button class="secondary" data-action="edit" data-id="${item.id}">Edit</button>
+              <button class="secondary" data-action="delete" data-id="${item.id}">Delete</button>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(tr);
+      }
+    }
 
-    const reader = new FileReader();
+    function clearForm() {
+      editingId = null;
+      document.getElementById('date').value = '';
+      document.getElementById('presenter').selectedIndex = 0;
+      document.getElementById('topic').value = '';
+      document.getElementById('status').value = 'Draft';
+      document.getElementById('slides').value = '';
+      document.getElementById('notes').value = '';
+      document.getElementById('saveBtn').textContent = 'Save entry';
+    }
 
-    reader.onload = function(e){
+    function fillForm(item) {
+      editingId = item.id;
+      document.getElementById('date').value = item.date || '';
+      document.getElementById('presenter').value = item.presenter || members[0];
+      document.getElementById('topic').value = item.topic || '';
+      document.getElementById('status').value = item.status || 'Draft';
+      document.getElementById('slides').value = item.slides || '';
+      document.getElementById('notes').value = item.notes || '';
+      document.getElementById('saveBtn').textContent = 'Update entry';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        try{
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      const date = document.getElementById('date').value;
+      const presenter = document.getElementById('presenter').value;
+      const topic = document.getElementById('topic').value.trim();
+      const status = document.getElementById('status').value;
+      const slides = document.getElementById('slides').value.trim();
+      const notes = document.getElementById('notes').value.trim();
 
-            seminarData = JSON.parse(e.target.result);
-            renderTable();
+      if (!date || !presenter || !topic) {
+        alert('Please complete date, presenter, and topic.');
+        return;
+      }
 
-        }catch{
+      const entries = getEntries();
 
-            alert("Invalid JSON file");
-
+      if (editingId) {
+        const idx = entries.findIndex(x => x.id === editingId);
+        if (idx >= 0) {
+          entries[idx] = { ...entries[idx], date, presenter, topic, status, slides, notes };
         }
+      } else {
+        entries.push({
+          id: crypto.randomUUID(),
+          date,
+          presenter,
+          topic,
+          status,
+          slides,
+          notes
+        });
+      }
 
-    };
+      setEntries(entries);
+      clearForm();
+      render();
+    });
 
-    reader.readAsText(file);
+    document.getElementById('clearBtn').addEventListener('click', clearForm);
+    document.getElementById('search').addEventListener('input', render);
+    document.getElementById('filterStatus').addEventListener('change', render);
 
-});
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const data = JSON.stringify(getEntries(), null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'geotech-seminar-plan.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
 
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importFile').click();
+    });
 
+    document.getElementById('importFile').addEventListener('change', async (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
 
-function exportJSON(){
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
 
-    const dataStr = JSON.stringify(seminarData, null, 2);
+        if (!Array.isArray(parsed)) throw new Error('Invalid format');
 
-    const blob = new Blob([dataStr], {type:"application/json"});
+        const cleaned = parsed
+          .filter(item => item && typeof item === 'object')
+          .map(item => ({
+            id: item.id || crypto.randomUUID(),
+            date: item.date || '',
+            presenter: item.presenter || '',
+            topic: item.topic || '',
+            status: ['Draft', 'Planned', 'Ready'].includes(item.status) ? item.status : 'Draft',
+            slides: item.slides || '',
+            notes: item.notes || ''
+          }));
 
-    const url = URL.createObjectURL(blob);
+        setEntries(cleaned);
+        clearForm();
+        render();
+        alert('JSON imported successfully.');
+      } catch (err) {
+        alert('Could not import this JSON file.');
+      } finally {
+        event.target.value = '';
+      }
+    });
 
-    const a = document.createElement("a");
+    tableBody.addEventListener('click', (event) => {
+      const btn = event.target.closest('button[data-action]');
+      if (!btn) return;
 
-    a.href = url;
-    a.download = "seminar-data.json";
-    a.click();
+      const { action, id } = btn.dataset;
+      const entries = getEntries();
+      const item = entries.find(x => x.id === id);
 
-}
+      if (!item) return;
 
-</script>
+      if (action === 'edit') {
+        fillForm(item);
+      }
 
+      if (action === 'delete') {
+        const next = entries.filter(x => x.id !== id);
+        setEntries(next);
+        if (editingId === id) clearForm();
+        render();
+      }
+    });
+
+    render();
+  </script>
 </body>
 </html>
