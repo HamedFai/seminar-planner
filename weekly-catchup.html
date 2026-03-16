@@ -13,9 +13,6 @@
       --line: #dbe3ee;
       --accent: #1f5fbf;
       --accent-soft: #eaf2ff;
-      --ready: #dff3e6;
-      --pending: #fff0d8;
-      --draft: #eef2f7;
       --shadow: 0 10px 28px rgba(18, 40, 76, 0.08);
       --radius: 18px;
     }
@@ -70,6 +67,11 @@
       margin: 0 0 8px;
       font-size: clamp(28px, 4vw, 40px);
       line-height: 1.1;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
     }
 
     .sub {
@@ -151,6 +153,33 @@
       resize: vertical;
     }
 
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fbfdff;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .check-item label {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
     .table-wrap {
       overflow-x: auto;
       border: 1px solid var(--line);
@@ -161,7 +190,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 680px;
+      min-width: 860px;
     }
 
     th, td {
@@ -196,6 +225,7 @@
     @media (max-width: 820px) {
       .wrap { padding: 18px 14px 36px; }
       .hero, .card { padding: 18px; }
+      .checklist { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -220,6 +250,11 @@
         </div>
 
         <div class="field">
+          <label>Attendees</label>
+          <div id="attendeeList" class="checklist"></div>
+        </div>
+
+        <div class="field">
           <label for="notes">Meeting Notes</label>
           <textarea id="notes" placeholder="Add the weekly meeting notes here"></textarea>
         </div>
@@ -235,7 +270,7 @@
       <h2>Saved Weekly Notes</h2>
 
       <div class="toolbar">
-        <input id="search" type="text" placeholder="Search by date or notes" style="flex:1 1 260px;" />
+        <input id="search" type="text" placeholder="Search by date, notes, or attendee" style="flex:1 1 260px;" />
         <button class="btn-secondary" id="exportBtn" type="button">Export JSON</button>
       </div>
 
@@ -249,6 +284,7 @@
           <thead>
             <tr>
               <th>Date</th>
+              <th>Attendees</th>
               <th>Meeting Notes</th>
               <th>Action</th>
             </tr>
@@ -260,9 +296,30 @@
   </div>
 
   <script>
+    const members = [
+      "Ahmad Tawfiq",
+      "Cid Dieguez",
+      "Dai Nelsey",
+      "Dhiyyaz Razip",
+      "Erey Helmy",
+      "Federica Santoro",
+      "Habibuzaid Bahari",
+      "Hamed Faizi",
+      "Hoang Nguyen",
+      "Kamil Adamek",
+      "Karol Filipowski",
+      "Lucas Marques",
+      "Mateus Belbuche",
+      "Mohd Firdaus Bin Faudz",
+      "Salim Silveira",
+      "Siti Salwa Samigin",
+      "Vinnie Charrot"
+    ];
+
     const storageKey = "geo-crew-weekly-catchup";
     let editingId = null;
     const tableBody = document.getElementById("tableBody");
+    const attendeeList = document.getElementById("attendeeList");
 
     function escapeHtml(str) {
       return String(str)
@@ -271,6 +328,27 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
+    }
+
+    function buildAttendeeChecklist() {
+      attendeeList.innerHTML = members.map((name, index) => `
+        <div class="check-item">
+          <input type="checkbox" id="attendee-${index}" value="${escapeHtml(name)}">
+          <label for="attendee-${index}">${escapeHtml(name)}</label>
+        </div>
+      `).join("");
+    }
+
+    function getSelectedAttendees() {
+      return Array.from(attendeeList.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(el => el.value);
+    }
+
+    function setSelectedAttendees(selected) {
+      const selectedSet = new Set(Array.isArray(selected) ? selected : []);
+      attendeeList.querySelectorAll('input[type="checkbox"]').forEach(box => {
+        box.checked = selectedSet.has(box.value);
+      });
     }
 
     function getEntries() {
@@ -302,6 +380,7 @@
       editingId = null;
       document.getElementById("date").value = "";
       document.getElementById("notes").value = "";
+      setSelectedAttendees([]);
       document.getElementById("saveBtn").textContent = "Save entry";
     }
 
@@ -309,6 +388,7 @@
       editingId = item.id;
       document.getElementById("date").value = item.date || "";
       document.getElementById("notes").value = item.notes || "";
+      setSelectedAttendees(item.attendees || []);
       document.getElementById("saveBtn").textContent = "Update entry";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -320,21 +400,30 @@
         .slice()
         .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
         .filter(item => {
-          const hay = [item.date, item.notes].join(" ").toLowerCase();
+          const hay = [
+            item.date,
+            item.notes,
+            ...(Array.isArray(item.attendees) ? item.attendees : [])
+          ].join(" ").toLowerCase();
           return !q || hay.includes(q);
         });
 
       tableBody.innerHTML = "";
 
       if (!entries.length) {
-        tableBody.innerHTML = '<tr><td colspan="3" class="muted">No weekly notes found. Import a JSON file to begin.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="4" class="muted">No weekly notes found. Import a JSON file to begin.</td></tr>';
         return;
       }
 
       for (const item of entries) {
+        const attendeeText = Array.isArray(item.attendees) && item.attendees.length
+          ? item.attendees.map(escapeHtml).join(", ")
+          : "—";
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${formatDate(item.date)}</td>
+          <td>${attendeeText}</td>
           <td>${escapeHtml(item.notes || "—")}</td>
           <td>
             <div class="actions">
@@ -350,6 +439,7 @@
     document.getElementById("saveBtn").addEventListener("click", () => {
       const date = document.getElementById("date").value;
       const notes = document.getElementById("notes").value.trim();
+      const attendees = getSelectedAttendees();
 
       if (!date || !notes) {
         alert("Please complete date and meeting notes.");
@@ -361,13 +451,14 @@
       if (editingId) {
         const idx = entries.findIndex(x => x.id === editingId);
         if (idx >= 0) {
-          entries[idx] = { ...entries[idx], date, notes };
+          entries[idx] = { ...entries[idx], date, notes, attendees };
         }
       } else {
         entries.push({
           id: crypto.randomUUID(),
           date,
-          notes
+          notes,
+          attendees
         });
       }
 
@@ -408,7 +499,8 @@
           .map(item => ({
             id: item.id || crypto.randomUUID(),
             date: item.date || "",
-            notes: item.notes || ""
+            notes: item.notes || "",
+            attendees: Array.isArray(item.attendees) ? item.attendees : []
           }));
 
         setEntries(cleaned);
@@ -443,6 +535,7 @@
       }
     });
 
+    buildAttendeeChecklist();
     render();
   </script>
 </body>
