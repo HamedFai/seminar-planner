@@ -15,9 +15,12 @@ Data need to be exported -> saved locally (in JASON format) for privacy.
 ## Project Structure
 
 / (root)
-|__ index.html              # Front page (navigation hub) \n
-|__ weekly-catchup.html     # Weekly meeting notes \n
-|__ seminars.html           # Bi-weekly seminar planner \n
+
+|__ index.html              # Front page (navigation hub)
+
+|__ weekly-catchup.html     # Weekly meeting notes 
+
+|__ seminars.html           # Bi-weekly seminar planner
 
 ---
 
