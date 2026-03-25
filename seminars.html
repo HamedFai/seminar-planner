@@ -514,10 +514,51 @@
     document.getElementById("search").addEventListener("input", render);
     document.getElementById("filterStatus").addEventListener("change", render);
 
+    // document.getElementById("exportBtn").addEventListener("click", () => {
+    //   const blob = new Blob([JSON.stringify(getEntries(), null, 2)], { type: "application/json" });
+    //   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "geo-crew-seminars.json" });
+    //   a.click(); URL.revokeObjectURL(a.href);
+    // });
+
     document.getElementById("exportBtn").addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(getEntries(), null, 2)], { type: "application/json" });
-      const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "geo-crew-seminars.json" });
-      a.click(); URL.revokeObjectURL(a.href);
+      const now = new Date();
+    
+      // Format date as YYYYMMDD
+      const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+    
+      // Find next available index
+      let index = 1;
+      let filename;
+    
+      // Separate tracking for seminar files
+      if (!window._exportedSeminarFilenames) {
+        window._exportedSeminarFilenames = new Set();
+      }
+    
+      while (true) {
+        const suffix = String(index).padStart(2, "0");
+        filename = `${date}-${suffix}_seminar.json`;
+    
+        if (!window._exportedSeminarFilenames.has(filename)) {
+          window._exportedSeminarFilenames.add(filename);
+          break;
+        }
+    
+        index++;
+      }
+    
+      const blob = new Blob(
+        [JSON.stringify(getEntries(), null, 2)],
+        { type: "application/json" }
+      );
+    
+      const a = Object.assign(document.createElement("a"), {
+        href: URL.createObjectURL(blob),
+        download: filename
+      });
+    
+      a.click();
+      URL.revokeObjectURL(a.href);
     });
 
     document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
