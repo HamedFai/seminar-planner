@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geo Crew Weekly Catch-up</title>
+  <title>Geo Crew — Weekly Catch-up</title>
   <style>
     :root {
-      --bg: #f5f7fb;
       --card: #ffffff;
       --card-soft: #f8fbff;
       --text: #1f2937;
@@ -18,7 +17,6 @@
       --radius: 14px;
       --radius-lg: 20px;
       --shadow: 0 2px 12px rgba(18, 40, 76, 0.07);
-      --shadow-md: 0 4px 20px rgba(18, 40, 76, 0.10);
     }
 
     * { box-sizing: border-box; }
@@ -74,11 +72,7 @@
     h3 { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
     h4 { margin: 0 0 10px; font-size: 14px; font-weight: 700; }
 
-    .nav {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .nav { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .nav a {
       display: inline-block;
@@ -90,7 +84,6 @@
       font: inherit;
       font-size: 13px;
       font-weight: 600;
-      cursor: pointer;
       border: 1px solid var(--line);
       transition: background 0.15s;
     }
@@ -116,11 +109,7 @@
     }
 
     /* ── Entry layout ── */
-    .entry-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
+    .entry-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
 
     .entry-top-row {
       display: grid;
@@ -128,8 +117,6 @@
       gap: 16px;
       align-items: start;
     }
-
-    .entry-meta { display: grid; gap: 14px; }
 
     /* ── Panels (inner) ── */
     .panel {
@@ -141,12 +128,7 @@
 
     /* ── Form fields ── */
     .field { display: flex; flex-direction: column; gap: 6px; }
-
-    .field label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-    }
+    .field label { font-size: 13px; font-weight: 700; color: var(--text); }
 
     input, select, textarea {
       width: 100%;
@@ -167,11 +149,7 @@
       box-shadow: 0 0 0 3px rgba(31, 95, 191, 0.10);
     }
 
-    textarea {
-      min-height: 200px;
-      resize: vertical;
-      line-height: 1.6;
-    }
+    textarea { min-height: 200px; resize: vertical; line-height: 1.6; }
 
     /* ── Attendee checklist ── */
     .checklist {
@@ -184,34 +162,16 @@
       background: #fff;
     }
 
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .check-item { display: flex; align-items: center; gap: 8px; }
 
     .check-item input[type="checkbox"] {
-      width: 15px;
-      height: 15px;
-      margin: 0;
-      flex-shrink: 0;
-      accent-color: var(--accent);
+      width: 15px; height: 15px; margin: 0; flex-shrink: 0; accent-color: var(--accent);
     }
 
-    .check-item label {
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 1.3;
-      cursor: pointer;
-    }
+    .check-item label { font-size: 13px; font-weight: 500; line-height: 1.3; cursor: pointer; }
 
     /* ── Action item form grid ── */
-    .ai-form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
+    .ai-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .ai-form-grid .full { grid-column: 1 / -1; }
 
     /* ── Buttons ── */
@@ -241,12 +201,7 @@
     }
     .btn-primary:hover { background: #174fa8; border-color: #174fa8; }
 
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
     /* ── Action items table ── */
     .table-wrap {
@@ -258,11 +213,7 @@
       margin-top: 14px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 640px;
-    }
+    table { width: 100%; border-collapse: collapse; min-width: 640px; }
 
     th, td {
       padding: 11px 12px;
@@ -322,13 +273,7 @@
     .saved-entry-meta { display: grid; gap: 5px; }
     .saved-entry-meta h3 { margin: 0; font-size: 16px; }
 
-    .meta-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .meta-pills { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
 
     .saved-entry-body {
       display: grid;
@@ -336,14 +281,8 @@
       align-items: start;
     }
 
-    .saved-section {
-      padding: 18px 20px;
-      min-width: 0;
-    }
-
-    .saved-section + .saved-section {
-      border-left: 1px solid var(--line);
-    }
+    .saved-section { padding: 18px 20px; min-width: 0; }
+    .saved-section + .saved-section { border-left: 1px solid var(--line); }
 
     .saved-section-title {
       margin: 0 0 10px;
@@ -354,12 +293,7 @@
       color: var(--muted);
     }
 
-    .saved-notes {
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.65;
-      font-size: 14px;
-    }
+    .saved-notes { white-space: pre-wrap; word-break: break-word; line-height: 1.65; font-size: 14px; }
 
     .saved-ai-list { display: grid; gap: 8px; }
 
@@ -390,30 +324,12 @@
       border-radius: 999px;
     }
 
-    .saved-ai-desc {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 1.45;
-      margin-bottom: 6px;
-      word-break: break-word;
-    }
-
-    .saved-ai-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 14px;
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .saved-ai-desc { font-weight: 600; font-size: 14px; line-height: 1.45; margin-bottom: 6px; word-break: break-word; }
+    .saved-ai-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--muted); font-size: 12px; }
 
     .muted { color: var(--muted); font-size: 13px; }
 
-    /* ── Section divider ── */
-    .section-divider {
-      border: none;
-      border-top: 1px solid var(--line);
-      margin: 20px 0 18px;
-    }
+    .section-divider { border: none; border-top: 1px solid var(--line); margin: 20px 0 18px; }
 
     @media (max-width: 900px) {
       .saved-entry-body { grid-template-columns: 1fr; }
@@ -444,6 +360,7 @@
       </div>
       <nav class="nav">
         <a href="index.html">Home</a>
+        <a href="action-items.html">Action Items</a>
         <a href="seminars.html">Seminar Planner</a>
       </nav>
     </header>
@@ -458,21 +375,18 @@
 
         <!-- Top row: date + attendees -->
         <div class="entry-top-row">
-
           <div class="panel">
             <div class="field">
               <label for="date">Meeting Date</label>
               <input id="date" type="date" />
             </div>
           </div>
-
           <div class="panel">
             <div class="field">
               <label>Attendees</label>
               <div id="attendeeList" class="checklist"></div>
             </div>
           </div>
-
         </div>
 
         <!-- Notes + action item form: full width -->
@@ -501,22 +415,18 @@
                   <option>Other</option>
                 </select>
               </div>
-
               <div class="field">
                 <label for="ai-delegated-to">Delegated To</label>
                 <select id="ai-delegated-to"></select>
               </div>
-
               <div class="field full">
                 <label for="ai-description">Action Item</label>
                 <input id="ai-description" type="text" placeholder="Describe the action item" />
               </div>
-
               <div class="field">
                 <label for="ai-due-date">Due Date</label>
                 <input id="ai-due-date" type="date" />
               </div>
-
               <div class="field">
                 <label for="ai-status">Status</label>
                 <select id="ai-status">
@@ -593,19 +503,18 @@
     let currentActionItems = [];
     let currentAIEditingId = null;
 
-    const savedEntries   = document.getElementById("savedEntries");
-    const attendeeList   = document.getElementById("attendeeList");
-    const aiCategory     = document.getElementById("ai-category");
-    const aiDelegatedTo  = document.getElementById("ai-delegated-to");
-    const aiDescription  = document.getElementById("ai-description");
-    const aiDueDate      = document.getElementById("ai-due-date");
-    const aiStatus       = document.getElementById("ai-status");
-    const currentAIBody  = document.getElementById("currentActionItemsTableBody");
-    const addAiBtn       = document.getElementById("add-ai-btn");
+    const savedEntries  = document.getElementById("savedEntries");
+    const attendeeList  = document.getElementById("attendeeList");
+    const aiCategory    = document.getElementById("ai-category");
+    const aiDelegatedTo = document.getElementById("ai-delegated-to");
+    const aiDescription = document.getElementById("ai-description");
+    const aiDueDate     = document.getElementById("ai-due-date");
+    const aiStatus      = document.getElementById("ai-status");
+    const currentAIBody = document.getElementById("currentActionItemsTableBody");
+    const addAiBtn      = document.getElementById("add-ai-btn");
 
     function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
         .replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
@@ -614,16 +523,13 @@
         <div class="check-item">
           <input type="checkbox" id="att-${i}" value="${escapeHtml(name)}" />
           <label for="att-${i}">${escapeHtml(name)}</label>
-        </div>
-      `).join("");
+        </div>`).join("");
     }
 
     function buildAIAssigneeList() {
       aiDelegatedTo.innerHTML = '<option value="">Not Assigned</option>';
       members.forEach(name => {
-        const o = document.createElement("option");
-        o.value = o.textContent = name;
-        aiDelegatedTo.appendChild(o);
+        const o = document.createElement("option"); o.value = o.textContent = name; aiDelegatedTo.appendChild(o);
       });
     }
 
@@ -711,8 +617,7 @@
     }
 
     function renderActionItemsDisplay(actionItems) {
-      if (!Array.isArray(actionItems) || !actionItems.length)
-        return `<p class="muted">No action items.</p>`;
+      if (!Array.isArray(actionItems) || !actionItems.length) return `<p class="muted">No action items.</p>`;
       return `<div class="saved-ai-list">${actionItems.map(ai => `
         <div class="saved-ai-item">
           <div class="saved-ai-top">
