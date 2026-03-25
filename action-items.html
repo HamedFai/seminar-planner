@@ -329,7 +329,8 @@
           <option value="">All Assignees</option>
         </select>
         <button class="filter-clear" id="clearFilters" type="button">Clear filters</button>
-        <button class="btn" id="exportBtn" type="button">Export CSV</button>
+        <button class="btn" id="importBtn" type="button">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json,.json" style="display:none;" />
       </div>
 
       <!-- Table -->
@@ -539,20 +540,36 @@
       render();
     });
 
-    // CSV export
-    document.getElementById("exportBtn").addEventListener("click", () => {
-      const items = getFilteredSorted();
-      const headers = ["Meeting Date","Category","Action Item","Assigned To","Due Date","Status"];
-      const rows = items.map(ai => [
-        formatDate(ai.meetingDate), ai.category||"", ai.description||"",
-        ai.delegatedTo||"", formatDate(ai.dueDate), ai.status||""
-      ].map(v => `"${String(v).replaceAll('"','""')}"`).join(","));
-      const csv = [headers.join(","), ...rows].join("\n");
-      const blob = new Blob([csv], { type: "text/csv" });
-      const a = Object.assign(document.createElement("a"), {
-        href: URL.createObjectURL(blob), download: "geo-crew-action-items.csv"
-      });
-      a.click(); URL.revokeObjectURL(a.href);
+    // Import JSON
+    document.getElementById("importBtn").addEventListener("click", () => {
+      document.getElementById("importFile").click();
+    });
+
+    document.getElementById("importFile").addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const parsed = JSON.parse(await file.text());
+        if (!Array.isArray(parsed)) throw new Error();
+        const cleaned = parsed.filter(x => x && typeof x === "object").map(item => ({
+          id: item.id || crypto.randomUUID(),
+          date: item.date || "",
+          notes: item.notes || "",
+          attendees: Array.isArray(item.attendees) ? item.attendees : [],
+          actionItems: Array.isArray(item.actionItems) ? item.actionItems.map(ai => ({
+            id: ai.id || crypto.randomUUID(),
+            category: ai.category || "",
+            description: ai.description || "",
+            delegatedTo: ai.delegatedTo || "",
+            dueDate: ai.dueDate || "",
+            status: ["Open","Closed"].includes(ai.status) ? ai.status : "Open"
+          })) : []
+        }));
+        localStorage.setItem(storageKey, JSON.stringify(cleaned));
+        renderAll();
+        alert("JSON imported successfully.");
+      } catch { alert("Could not import this JSON file."); }
+      finally { e.target.value = ""; }
     });
 
     // Set default sort icon
