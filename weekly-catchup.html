@@ -285,7 +285,7 @@
         <div class="field">
           <label>Attendees</label>
           <div id="attendeeList" class="checklist"></div>
-        </div>
+        }
 
         <div class="field">
           <label for="notes">Meeting Notes</label>
@@ -325,10 +325,6 @@
             <option>Closed</option>
           </select>
         </div>
-        <div class="field full">
-          <label for="ai-comments">Comments</label>
-          <textarea id="ai-comments" placeholder="Details or further notes on this action item"></textarea>
-        </div>
       </div>
       <div class="toolbar" style="margin-top: 16px;">
         <button class="btn-secondary" id="add-ai-btn">Add Action Item to Note</button>
@@ -345,12 +341,11 @@
               <th style="min-width: 120px;">Delegated To</th>
               <th style="min-width: 100px;">Due Date</th>
               <th style="min-width: 80px;">Status</th>
-              <th style="min-width: 200px;">Comments</th>
               <th style="min-width: 120px;">Action</th>
             </tr>
           </thead>
           <tbody id="currentActionItemsTableBody">
-            <tr><td colspan="7" class="muted">No action items added yet.</td></tr>
+            <tr><td colspan="6" class="muted">No action items added yet.</td></tr>
           </tbody>
         </table>
       </div>
@@ -366,7 +361,8 @@
 
       <div class="toolbar">
         <input id="search" type="text" placeholder="Search by date, notes, or attendee" style="flex:1 1 260px;" />
-        <button class="btn-secondary" id="exportBtn" type="button">Export JSON</button>
+        <button class="btn-secondary" id="exportNotesBtn" type="button">Export Notes JSON</button>
+        <button class="btn-secondary" id="exportActionItemsBtn" type="button">Export Action Items JSON</button>
       </div>
 
       <div class="toolbar" style="margin-top: 0; margin-bottom: 16px;">
@@ -426,7 +422,7 @@
     const aiDescription = document.getElementById("ai-description");
     const aiDueDate = document.getElementById("ai-due-date");
     const aiStatus = document.getElementById("ai-status");
-    const aiComments = document.getElementById("ai-comments");
+    // Removed aiComments constant declaration
     const currentActionItemsTableBody = document.getElementById("currentActionItemsTableBody");
     const addAiBtn = document.getElementById("add-ai-btn");
     const clearAiFormBtn = document.getElementById("clear-ai-form-btn");
@@ -504,7 +500,7 @@
       aiDescription.value = "";
       aiDueDate.value = "";
       aiStatus.value = "Open";
-      aiComments.value = "";
+      // Removed aiComments.value = "";
       addAiBtn.textContent = "Add Action Item to Note";
     }
 
@@ -515,14 +511,14 @@
       aiDescription.value = actionItem.description || "";
       aiDueDate.value = actionItem.dueDate || "";
       aiStatus.value = actionItem.status || "Open";
-      aiComments.value = actionItem.comments || "";
+      // Removed aiComments.value = actionItem.comments || "";
       addAiBtn.textContent = "Update Action Item";
     }
 
     function renderCurrentActionItemsTable() {
       currentActionItemsTableBody.innerHTML = "";
       if (!currentActionItems.length) {
-        currentActionItemsTableBody.innerHTML = '<tr><td colspan="7" class="muted">No action items added yet.</td></tr>';
+        currentActionItemsTableBody.innerHTML = '<tr><td colspan="6" class="muted">No action items added yet.</td></tr>';
         return;
       }
 
@@ -534,7 +530,6 @@
           <td>${escapeHtml(ai.delegatedTo || "—")}</td>
           <td>${formatDate(ai.dueDate)}</td>
           <td><span class="ai-item-status ${ai.status.toLowerCase()}">${escapeHtml(ai.status || "—")}</span></td>
-          <td>${escapeHtml(ai.comments || "—")}</td>
           <td>
             <div class="actions">
               <button class="btn-secondary" data-action="edit-ai" data-id="${ai.id}">Edit</button>
@@ -658,7 +653,7 @@
       const description = aiDescription.value.trim();
       const dueDate = aiDueDate.value;
       const status = aiStatus.value;
-      const comments = aiComments.value.trim();
+      // Removed comments from here
 
       if (!category || !description) {
         alert("Please select a category and provide an action item description.");
@@ -671,7 +666,7 @@
         if (idx >= 0) {
           currentActionItems[idx] = {
             ...currentActionItems[idx],
-            category, description, delegatedTo, dueDate, status, comments
+            category, description, delegatedTo, dueDate, status
           };
         }
       } else {
@@ -682,8 +677,8 @@
           description,
           delegatedTo,
           dueDate,
-          status,
-          comments
+          status
+          // Removed comments from here
         });
       }
 
@@ -694,13 +689,40 @@
     document.getElementById("clearBtn").addEventListener("click", clearForm);
     document.getElementById("search").addEventListener("input", render);
 
-    document.getElementById("exportBtn").addEventListener("click", () => {
-      const data = JSON.stringify(getEntries(), null, 2);
+    document.getElementById("exportNotesBtn").addEventListener("click", () => {
+      const notesToExport = getEntries().map(note => {
+        const { actionItems, ...rest } = note; // Exclude actionItems
+        return rest;
+      });
+      const data = JSON.stringify(notesToExport, null, 2);
       const blob = new Blob([data], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "geo-crew-weekly-catchup.json";
+      a.download = "geo-crew-weekly-catchup-notes.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById("exportActionItemsBtn").addEventListener("click", () => {
+      const allActionItems = [];
+      getEntries().forEach(note => {
+        if (note.actionItems && Array.isArray(note.actionItems)) {
+          note.actionItems.forEach(ai => {
+            allActionItems.push({
+              meetingId: note.id,
+              meetingDate: note.date,
+              ...ai
+            });
+          });
+        }
+      });
+      const data = JSON.stringify(allActionItems, null, 2);
+      const blob = new Blob([data], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "geo-crew-weekly-catchup-action-items.json";
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -731,8 +753,8 @@
               description: ai.description || "",
               delegatedTo: ai.delegatedTo || "",
               dueDate: ai.dueDate || "",
-              status: ["Open", "Closed"].includes(ai.status) ? ai.status : "Open",
-              comments: ai.comments || ""
+              status: ["Open", "Closed"].includes(ai.status) ? ai.status : "Open"
+              // Removed comments from here
             })) : []
           }));
 
