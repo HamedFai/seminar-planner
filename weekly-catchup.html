@@ -377,6 +377,7 @@
               <th>Date</th>
               <th>Attendees</th>
               <th>Meeting Notes</th>
+              <th>Action Items</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -580,7 +581,7 @@
       tableBody.innerHTML = "";
 
       if (!entries.length) {
-        tableBody.innerHTML = '<tr><td colspan="4" class="muted">No weekly notes found. Import a JSON file to begin.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" class="muted">No weekly notes found. Import a JSON file to begin.</td></tr>';
         return;
       }
 
@@ -589,11 +590,30 @@
           ? item.attendees.map(escapeHtml).join(", ")
           : "—";
 
+        let aiSummary = '<span class="muted">—</span>';
+        if (Array.isArray(item.actionItems) && item.actionItems.length > 0) {
+          const openCount = item.actionItems.filter(ai => ai.status === 'Open').length;
+          const closedCount = item.actionItems.filter(ai => ai.status === 'Closed').length;
+
+          let parts = [];
+          if (openCount > 0) {
+            parts.push(`<span class="ai-item-status open">${openCount} Open</span>`);
+          }
+          if (closedCount > 0) {
+            parts.push(`<span class="ai-item-status closed">${closedCount} Closed</span>`);
+          }
+          aiSummary = parts.join(' / ');
+          if (parts.length === 0 && item.actionItems.length > 0) { // All items have some other status, or mixed
+            aiSummary = `${item.actionItems.length} Total`; // Fallback for unexpected statuses
+          }
+        }
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${formatDate(item.date)}</td>
           <td>${attendeeText}</td>
           <td>${escapeHtml(item.notes || "—")}</td>
+          <td>${aiSummary}</td> <!-- New column for action item summary -->
           <td>
             <div class="actions">
               <button class="btn-secondary" data-action="edit" data-id="${item.id}">Edit</button>
