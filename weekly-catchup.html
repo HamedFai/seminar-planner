@@ -14,494 +14,451 @@
       --line: #dbe3ee;
       --accent: #1f5fbf;
       --accent-soft: #eaf2ff;
-      --shadow: 0 10px 28px rgba(18, 40, 76, 0.08);
-      --shadow-soft: 0 6px 18px rgba(18, 40, 76, 0.05);
-      --radius: 18px;
+      --radius-sm: 10px;
+      --radius: 14px;
+      --radius-lg: 20px;
+      --shadow: 0 2px 12px rgba(18, 40, 76, 0.07);
+      --shadow-md: 0 4px 20px rgba(18, 40, 76, 0.10);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: linear-gradient(180deg, #f7f9fc 0%, #eef3fa 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: #eef2f8;
       color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .wrap {
       width: 100%;
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 32px 18px 48px;
+      padding: 28px 20px 56px;
     }
 
-    .hero,
-    .card,
-    .panel {
+    /* ── Hero ── */
+    .hero {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
     }
 
-    .hero {
-      padding: 28px;
-      margin-bottom: 22px;
-    }
-
-    .card {
-      padding: 22px;
-      border-radius: var(--radius);
-      margin-bottom: 22px;
-      overflow: hidden;
-    }
-
-    .panel {
-      padding: 18px;
-      border-radius: 18px;
-      box-shadow: var(--shadow-soft);
-      min-width: 0;
-      max-width: 100%;
-    }
+    .hero-left { display: flex; flex-direction: column; gap: 6px; }
 
     .eyebrow {
       display: inline-block;
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
       background: var(--accent-soft);
-      padding: 6px 10px;
+      padding: 4px 10px;
       border-radius: 999px;
-      margin-bottom: 12px;
       font-weight: 700;
+      width: fit-content;
     }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 4vw, 40px);
-      line-height: 1.1;
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: 20px;
-    }
-
-    h3 {
-      margin: 0 0 14px;
-      font-size: 18px;
-    }
-
-    h4 {
-      margin: 0 0 12px;
-      font-size: 16px;
-    }
-
-    .sub {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .helper {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    h1 { margin: 0; font-size: clamp(22px, 3.5vw, 32px); line-height: 1.15; font-weight: 700; }
+    h2 { margin: 0 0 16px; font-size: 17px; font-weight: 700; }
+    h3 { margin: 0 0 12px; font-size: 16px; font-weight: 700; }
+    h4 { margin: 0 0 10px; font-size: 14px; font-weight: 700; }
 
     .nav {
-      margin-top: 14px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .nav a,
-    .btn,
-    button {
-      display: inline-block;
-      text-decoration: none;
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 14px;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    }
-
-    .nav a:hover,
-    .btn:hover,
-    button:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary,
-    button.btn-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 8px 18px rgba(31, 95, 191, 0.22);
-    }
-
-    .btn-secondary,
-    button.btn-secondary,
-    .nav a {
-      background: #eef3f9;
-      color: var(--text);
-    }
-
-    .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .entry-layout {
-      display: grid;
-      grid-template-columns: 320px minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-      margin-bottom: 22px;
-      width: 100%;
-      min-width: 0;
-    }
-
-    .entry-meta,
-    .entry-main {
-      display: grid;
-      gap: 16px;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-width: 0;
-    }
-
-    .field label {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      min-width: 0;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 11px 12px;
-      background: #fff;
-      font: inherit;
-      color: var(--text);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #a8c4f3;
-      box-shadow: 0 0 0 4px rgba(31, 95, 191, 0.08);
-    }
-
-    textarea {
-      min-height: 220px;
-      resize: vertical;
-      line-height: 1.5;
-    }
-
-    .notes-panel textarea {
-      min-height: 220px;
-    }
-
-    .checklist {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      background: #fbfdff;
-      max-height: 280px;
-      overflow: auto;
-      min-width: 0;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .check-item input[type="checkbox"] {
-      width: auto;
-      margin: 0;
-      flex: 0 0 auto;
-    }
-
-    .check-item label {
-      font-weight: 500;
-      font-size: 14px;
-      min-width: 0;
-    }
-
-    .action-item-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      min-width: 0;
-      width: 100%;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    .table-wrap {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fff;
-      min-width: 0;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 720px;
-    }
-
-    th,
-    td {
-      padding: 14px 12px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-    }
-
-    th {
-      background: #f8fbff;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .actions {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
     }
 
-    .ai-item-status {
+    .nav a {
       display: inline-block;
-      padding: 4px 8px;
+      text-decoration: none;
+      background: #eef3f9;
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--line);
+      transition: background 0.15s;
+    }
+    .nav a:hover { background: #e0eaf7; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Entry layout ── */
+    .entry-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .entry-top-row {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .entry-meta { display: grid; gap: 14px; }
+
+    /* ── Panels (inner) ── */
+    .panel {
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    /* ── Form fields ── */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      background: #fff;
+      font: inherit;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #7aabf0;
+      box-shadow: 0 0 0 3px rgba(31, 95, 191, 0.10);
+    }
+
+    textarea {
+      min-height: 200px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    /* ── Attendee checklist ── */
+    .checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #fff;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+    }
+
+    .check-item label {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+
+    /* ── Action item form grid ── */
+    .ai-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ai-form-grid .full { grid-column: 1 / -1; }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 9px 16px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #f0f4f9;
+      color: var(--text);
+      transition: background 0.13s, transform 0.12s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: #e2eaf5; transform: translateY(-1px); }
+    .btn:active { transform: none; }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(31, 95, 191, 0.22);
+    }
+    .btn-primary:hover { background: #174fa8; border-color: #174fa8; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ── Action items table ── */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      margin-top: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    th {
+      background: #f4f7fc;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .row-actions { display: flex; gap: 6px; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
       border-radius: 999px;
       font-size: 11px;
       font-weight: 700;
       text-transform: uppercase;
       white-space: nowrap;
     }
+    .status-badge.open   { background: #fee2e2; color: #b91c1c; }
+    .status-badge.closed { background: #dcfce7; color: #15803d; }
 
-    .ai-item-status.open {
-      background-color: #ffcdd2;
-      color: #c62828;
-    }
-
-    .ai-item-status.closed {
-      background-color: #c8e6c9;
-      color: #2e7d32;
-    }
-
-    .saved-list {
-      display: grid;
-      gap: 18px;
-    }
+    /* ── Saved list ── */
+    .saved-list { display: grid; gap: 16px; }
 
     .saved-entry {
       border: 1px solid var(--line);
-      border-radius: 20px;
+      border-radius: var(--radius-lg);
       background: #fff;
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow);
       overflow: hidden;
-      min-width: 0;
     }
 
     .saved-entry-head {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 18px 18px 14px;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
       border-bottom: 1px solid var(--line);
-      background: #fbfdff;
+      background: #f8fbff;
       flex-wrap: wrap;
     }
 
-    .saved-entry-meta {
-      display: grid;
-      gap: 8px;
-      min-width: 0;
-    }
+    .saved-entry-meta { display: grid; gap: 5px; }
+    .saved-entry-meta h3 { margin: 0; font-size: 16px; }
 
-    .saved-meta-row {
+    .meta-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 18px;
+      gap: 6px 14px;
+      font-size: 13px;
       color: var(--muted);
-      font-size: 14px;
     }
 
     .saved-entry-body {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      padding: 18px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: start;
-      min-width: 0;
     }
 
     .saved-section {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--card-soft);
-      padding: 16px;
+      padding: 18px 20px;
       min-width: 0;
-      height: 100%;
+    }
+
+    .saved-section + .saved-section {
+      border-left: 1px solid var(--line);
     }
 
     .saved-section-title {
       margin: 0 0 10px;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
     }
 
     .saved-notes {
       white-space: pre-wrap;
       word-break: break-word;
-      line-height: 1.6;
+      line-height: 1.65;
       font-size: 14px;
     }
 
-    .saved-ai-list {
-      display: grid;
-      gap: 10px;
-    }
+    .saved-ai-list { display: grid; gap: 8px; }
 
     .saved-ai-item {
-      background: #fff;
+      background: #f8fbff;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      min-width: 0;
+      border-radius: var(--radius);
+      padding: 12px 14px;
     }
 
     .saved-ai-top {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       align-items: flex-start;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       flex-wrap: wrap;
+    }
+
+    .saved-ai-category {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 2px 8px;
+      border-radius: 999px;
     }
 
     .saved-ai-desc {
       font-weight: 600;
-      line-height: 1.5;
-      margin-bottom: 8px;
+      font-size: 14px;
+      line-height: 1.45;
+      margin-bottom: 6px;
       word-break: break-word;
     }
 
     .saved-ai-meta {
-      display: grid;
-      gap: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 14px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
     }
 
-    @media (max-width: 940px) {
-      .entry-layout {
-        grid-template-columns: 1fr;
-      }
+    .muted { color: var(--muted); font-size: 13px; }
 
-      .saved-entry-body {
-        grid-template-columns: 1fr;
-      }
-
-      .notes-panel textarea {
-        min-height: 180px;
-      }
+    /* ── Section divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 20px 0 18px;
     }
 
-    @media (max-width: 820px) {
-      .wrap {
-        padding: 18px 14px 36px;
-      }
+    @media (max-width: 900px) {
+      .saved-entry-body { grid-template-columns: 1fr; }
+      .saved-section + .saved-section { border-left: none; border-top: 1px solid var(--line); }
+    }
 
-      .hero,
-      .card {
-        padding: 18px;
-      }
+    @media (max-width: 700px) {
+      .entry-top-row { grid-template-columns: 1fr; }
+    }
 
-      .action-item-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 640px) {
+      .wrap { padding: 14px 12px 40px; }
+      .hero { padding: 18px; }
+      .card { padding: 16px; }
+      .ai-form-grid { grid-template-columns: 1fr; }
+      .ai-form-grid .full { grid-column: 1; }
+      .checklist { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <section class="hero">
-      <div class="eyebrow">Geo Crew</div>
-      <h1>Weekly Catch-up</h1>
-      <!-- <p class="sub">Record key discussion points, attendees, meeting notes, and action items.</p> -->
-      <div class="nav">
+
+    <header class="hero">
+      <div class="hero-left">
+        <span class="eyebrow">Geo Crew</span>
+        <h1>Weekly Catch-up</h1>
+      </div>
+      <nav class="nav">
         <a href="index.html">Home</a>
         <a href="seminars.html">Seminar Planner</a>
-      </div>
-    </section>
+      </nav>
+    </header>
 
+    <!-- ── Add / Edit Entry ── -->
     <section class="card">
-      <div class="section-head">
-        <div>
-          <h2 style="margin-bottom:6px;">Add Weekly Notes</h2>
-          <!-- <p class="helper">Action items stay inside the same meeting entry and are imported/exported in one JSON file.</p> -->
-        </div>
+      <div class="card-header">
+        <h2 style="margin-bottom:0;">Add Weekly Notes</h2>
       </div>
 
       <div class="entry-layout">
-        <div class="entry-meta">
+
+        <!-- Top row: date + attendees -->
+        <div class="entry-top-row">
+
           <div class="panel">
             <div class="field">
               <label for="date">Meeting Date</label>
@@ -512,39 +469,35 @@
           <div class="panel">
             <div class="field">
               <label>Attendees</label>
-              <!-- <p class="helper">Select everyone who joined this catch-up.</p> -->
               <div id="attendeeList" class="checklist"></div>
             </div>
           </div>
+
         </div>
 
-        <div class="entry-main">
-          <div class="panel notes-panel">
+        <!-- Notes + action item form: full width -->
+        <div style="display:grid; gap:16px; min-width:0;">
+
+          <div class="panel">
             <div class="field">
               <label for="notes">Meeting Notes</label>
-              <!-- <p class="helper">Capture discussion points, decisions, blockers, and updates.</p> -->
-              <textarea id="notes" placeholder="Add the weekly meeting notes here"></textarea>
+              <textarea id="notes" placeholder="Capture discussion points, decisions, blockers, and updates…"></textarea>
             </div>
           </div>
 
           <div class="panel">
-            <div class="section-head">
-              <div>
-                <h3 style="margin-bottom:6px;">Action Item Details</h3>
-                <!-- <p class="helper">Add one or more action items before saving the entry.</p> -->
-              </div>
-            </div>
+            <h3 style="margin-bottom:14px;">Action Item Details</h3>
 
-            <div class="action-item-grid">
+            <div class="ai-form-grid">
               <div class="field">
                 <label for="ai-category">Category</label>
                 <select id="ai-category">
-                  <option value="">Select Category</option>
+                  <option value="">Select category</option>
                   <option>General Admin</option>
                   <option>Rome Laboratory</option>
                   <option>Data Platform</option>
                   <option>Offshore Ops</option>
-                  <option>System & Procedures</option>
+                  <option>System &amp; Procedures</option>
                   <option>Other</option>
                 </select>
               </div>
@@ -573,12 +526,14 @@
               </div>
             </div>
 
-            <div class="toolbar" style="margin-top: 16px;">
-              <button class="btn-secondary" id="add-ai-btn" type="button">Add Item</button>
-              <button class="btn-secondary" id="clear-ai-form-btn" type="button">Clear Item</button>
+            <div class="toolbar" style="margin-top:14px;">
+              <button class="btn btn-primary" id="add-ai-btn" type="button">Add Item</button>
+              <button class="btn" id="clear-ai-form-btn" type="button">Clear Item</button>
             </div>
 
-            <h4 style="margin-top: 22px;">Action Items for Current Note</h4>
+            <hr class="section-divider" />
+
+            <h4>Action Items for Current Entry</h4>
             <div class="table-wrap">
               <table id="currentActionItemsTable">
                 <thead>
@@ -588,62 +543,49 @@
                     <th>Delegated To</th>
                     <th>Due Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody id="currentActionItemsTableBody">
-                  <tr><td colspan="5" class="muted">No action items added yet.</td></tr>
+                  <tr><td colspan="6" class="muted">No action items added yet.</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
       </div>
 
-      <div class="toolbar" style="margin-top: 18px;">
-        <button class="btn-primary" id="saveBtn" type="button">Save entry</button>
-        <button class="btn-secondary" id="clearBtn" type="button">Clear form</button>
+      <div class="toolbar" style="margin-top:20px;">
+        <button class="btn btn-primary" id="saveBtn" type="button">Save Entry</button>
+        <button class="btn" id="clearBtn" type="button">Clear Form</button>
       </div>
     </section>
 
+    <!-- ── Record ── -->
     <section class="card">
-      <div class="section-head">
-        <div>
-          <h2 style="margin-bottom:6px;">Record of Weekly Notes & Action Items</h2>
-          <!-- <p class="helper">Saved and imported entries appear below with meeting notes and action items shown in separate, equal-width panels.</p> -->
-        </div>
+      <div class="card-header">
+        <h2 style="margin-bottom:0;">Weekly Notes &amp; Action Items</h2>
       </div>
 
-      <div class="toolbar">
-        <input id="search" type="text" placeholder="Search by date, notes, attendee, or action item" style="flex:1 1 260px;" />
-        <button class="btn-secondary" id="exportBtn" type="button">Export JSON</button>
-        <button class="btn-secondary" id="importBtn" type="button">Import JSON</button>
+      <div class="toolbar" style="margin-bottom:16px;">
+        <input id="search" type="text" placeholder="Search by date, notes, attendee, or action item…" style="flex:1 1 220px;" />
+        <button class="btn" id="exportBtn" type="button">Export JSON</button>
+        <button class="btn" id="importBtn" type="button">Import JSON</button>
         <input id="importFile" type="file" accept="application/json,.json" style="display:none;" />
       </div>
 
       <div id="savedEntries" class="saved-list"></div>
     </section>
+
   </div>
 
   <script>
     const members = [
-      "Ahmad Tawfiq",
-      "Cid Dieguez",
-      "Dai Nelsey",
-      "Dhiyyaz Razip",
-      "Erey Helmy",
-      "Federica Santoro",
-      "Habibuzaid Bahari",
-      "Hamed Faizi",
-      "Hoang Nguyen",
-      "Kamil Adamek",
-      "Karol Filipowski",
-      "Lucas Marques",
-      "Mateus Belbuche",
-      "Mohd Firdaus Bin Faudz",
-      "Salim Silveira",
-      "Siti Salwa Samigin",
-      "Vinnie Charrot"
+      "Ahmad Tawfiq","Cid Dieguez","Dai Nelsey","Dhiyyaz Razip","Erey Helmy",
+      "Federica Santoro","Habibuzaid Bahari","Hamed Faizi","Hoang Nguyen",
+      "Kamil Adamek","Karol Filipowski","Lucas Marques","Mateus Belbuche",
+      "Mohd Firdaus Bin Faudz","Salim Silveira","Siti Salwa Samigin","Vinnie Charrot"
     ];
 
     const storageKey = "geo-crew-weekly-catchup";
@@ -651,32 +593,27 @@
     let currentActionItems = [];
     let currentAIEditingId = null;
 
-    const savedEntries = document.getElementById("savedEntries");
-    const attendeeList = document.getElementById("attendeeList");
-
-    const aiCategory = document.getElementById("ai-category");
-    const aiDelegatedTo = document.getElementById("ai-delegated-to");
-    const aiDescription = document.getElementById("ai-description");
-    const aiDueDate = document.getElementById("ai-due-date");
-    const aiStatus = document.getElementById("ai-status");
-    const currentActionItemsTableBody = document.getElementById("currentActionItemsTableBody");
-    const addAiBtn = document.getElementById("add-ai-btn");
-    const clearAiFormBtn = document.getElementById("clear-ai-form-btn");
+    const savedEntries   = document.getElementById("savedEntries");
+    const attendeeList   = document.getElementById("attendeeList");
+    const aiCategory     = document.getElementById("ai-category");
+    const aiDelegatedTo  = document.getElementById("ai-delegated-to");
+    const aiDescription  = document.getElementById("ai-description");
+    const aiDueDate      = document.getElementById("ai-due-date");
+    const aiStatus       = document.getElementById("ai-status");
+    const currentAIBody  = document.getElementById("currentActionItemsTableBody");
+    const addAiBtn       = document.getElementById("add-ai-btn");
 
     function escapeHtml(str) {
       return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
     function buildAttendeeChecklist() {
-      attendeeList.innerHTML = members.map((name, index) => `
+      attendeeList.innerHTML = members.map((name, i) => `
         <div class="check-item">
-          <input type="checkbox" id="attendee-${index}" value="${escapeHtml(name)}" />
-          <label for="attendee-${index}">${escapeHtml(name)}</label>
+          <input type="checkbox" id="att-${i}" value="${escapeHtml(name)}" />
+          <label for="att-${i}">${escapeHtml(name)}</label>
         </div>
       `).join("");
     }
@@ -684,78 +621,54 @@
     function buildAIAssigneeList() {
       aiDelegatedTo.innerHTML = '<option value="">Not Assigned</option>';
       members.forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
-        aiDelegatedTo.appendChild(opt);
+        const o = document.createElement("option");
+        o.value = o.textContent = name;
+        aiDelegatedTo.appendChild(o);
       });
     }
 
     function getSelectedAttendees() {
-      return Array.from(attendeeList.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(el => el.value);
+      return Array.from(attendeeList.querySelectorAll('input[type="checkbox"]:checked')).map(el => el.value);
     }
 
     function setSelectedAttendees(selected) {
-      const selectedSet = new Set(Array.isArray(selected) ? selected : []);
-      attendeeList.querySelectorAll('input[type="checkbox"]').forEach(box => {
-        box.checked = selectedSet.has(box.value);
-      });
+      const s = new Set(Array.isArray(selected) ? selected : []);
+      attendeeList.querySelectorAll('input[type="checkbox"]').forEach(b => { b.checked = s.has(b.value); });
     }
 
     function getEntries() {
-      const saved = localStorage.getItem(storageKey);
-      if (!saved) return [];
-      try {
-        const parsed = JSON.parse(saved);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
+      try { const p = JSON.parse(localStorage.getItem(storageKey)); return Array.isArray(p) ? p : []; }
+      catch { return []; }
     }
 
-    function setEntries(entries) {
-      localStorage.setItem(storageKey, JSON.stringify(entries));
-    }
+    function setEntries(e) { localStorage.setItem(storageKey, JSON.stringify(e)); }
 
-    function formatDate(value) {
-      if (!value) return "—";
-      const d = new Date(value + "T00:00:00");
-      return d.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      });
+    function formatDate(v) {
+      if (!v) return "—";
+      return new Date(v + "T00:00:00").toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
     }
 
     function clearAIForm() {
       currentAIEditingId = null;
-      aiCategory.value = "";
-      aiDelegatedTo.value = "";
-      aiDescription.value = "";
-      aiDueDate.value = "";
-      aiStatus.value = "Open";
-      addAiBtn.textContent = "Add Action Item";
+      aiCategory.value = ""; aiDelegatedTo.value = ""; aiDescription.value = "";
+      aiDueDate.value = ""; aiStatus.value = "Open";
+      addAiBtn.textContent = "Add Item";
     }
 
-    function fillAIForm(actionItem) {
-      currentAIEditingId = actionItem.id;
-      aiCategory.value = actionItem.category || "";
-      aiDelegatedTo.value = actionItem.delegatedTo || "";
-      aiDescription.value = actionItem.description || "";
-      aiDueDate.value = actionItem.dueDate || "";
-      aiStatus.value = actionItem.status || "Open";
-      addAiBtn.textContent = "Update Action Item";
+    function fillAIForm(ai) {
+      currentAIEditingId = ai.id;
+      aiCategory.value = ai.category || ""; aiDelegatedTo.value = ai.delegatedTo || "";
+      aiDescription.value = ai.description || ""; aiDueDate.value = ai.dueDate || "";
+      aiStatus.value = ai.status || "Open";
+      addAiBtn.textContent = "Update Item";
     }
 
-    function renderCurrentActionItemsTable() {
-      currentActionItemsTableBody.innerHTML = "";
-
+    function renderCurrentAITable() {
+      currentAIBody.innerHTML = "";
       if (!currentActionItems.length) {
-        currentActionItemsTableBody.innerHTML = '<tr><td colspan="6" class="muted">No action items added yet.</td></tr>';
+        currentAIBody.innerHTML = '<tr><td colspan="6" class="muted">No action items added yet.</td></tr>';
         return;
       }
-
       for (const ai of currentActionItems) {
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -763,15 +676,14 @@
           <td>${escapeHtml(ai.description || "—")}</td>
           <td>${escapeHtml(ai.delegatedTo || "—")}</td>
           <td>${formatDate(ai.dueDate)}</td>
-          <td><span class="ai-item-status ${(ai.status || "Open").toLowerCase()}">${escapeHtml(ai.status || "Open")}</span></td>
+          <td><span class="status-badge ${(ai.status||"Open").toLowerCase()}">${escapeHtml(ai.status||"Open")}</span></td>
           <td>
-            <div class="actions">
-              <button class="btn-secondary" data-action="edit-ai" data-id="${ai.id}" type="button">Edit</button>
-              <button class="btn-secondary" data-action="delete-ai" data-id="${ai.id}" type="button">Delete</button>
+            <div class="row-actions">
+              <button class="btn" data-action="edit-ai" data-id="${ai.id}" type="button">Edit</button>
+              <button class="btn" data-action="delete-ai" data-id="${ai.id}" type="button">Delete</button>
             </div>
-          </td>
-        `;
-        currentActionItemsTableBody.appendChild(tr);
+          </td>`;
+        currentAIBody.appendChild(tr);
       }
     }
 
@@ -782,8 +694,8 @@
       setSelectedAttendees([]);
       currentActionItems = [];
       clearAIForm();
-      renderCurrentActionItemsTable();
-      document.getElementById("saveBtn").textContent = "Save entry";
+      renderCurrentAITable();
+      document.getElementById("saveBtn").textContent = "Save Entry";
     }
 
     function fillForm(item) {
@@ -792,275 +704,169 @@
       document.getElementById("notes").value = item.notes || "";
       setSelectedAttendees(item.attendees || []);
       currentActionItems = Array.isArray(item.actionItems) ? [...item.actionItems] : [];
-      renderCurrentActionItemsTable();
+      renderCurrentAITable();
       clearAIForm();
-      document.getElementById("saveBtn").textContent = "Update entry";
+      document.getElementById("saveBtn").textContent = "Update Entry";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function renderActionItemsDisplay(actionItems) {
-      if (!Array.isArray(actionItems) || !actionItems.length) {
+      if (!Array.isArray(actionItems) || !actionItems.length)
         return `<p class="muted">No action items.</p>`;
-      }
-
-      return `
-        <div class="saved-ai-list">
-          ${actionItems.map(ai => `
-            <div class="saved-ai-item">
-              <div class="saved-ai-top">
-                <strong>${escapeHtml(ai.category || "Uncategorized")}</strong>
-                <span class="ai-item-status ${(ai.status || "Open").toLowerCase()}">${escapeHtml(ai.status || "Open")}</span>
-              </div>
-              <div class="saved-ai-desc">${escapeHtml(ai.description || "—")}</div>
-              <div class="saved-ai-meta">
-                <div><strong>Delegated To:</strong> ${escapeHtml(ai.delegatedTo || "—")}</div>
-                <div><strong>Due Date:</strong> ${formatDate(ai.dueDate)}</div>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      `;
+      return `<div class="saved-ai-list">${actionItems.map(ai => `
+        <div class="saved-ai-item">
+          <div class="saved-ai-top">
+            <span class="saved-ai-category">${escapeHtml(ai.category||"Uncategorized")}</span>
+            <span class="status-badge ${(ai.status||"Open").toLowerCase()}">${escapeHtml(ai.status||"Open")}</span>
+          </div>
+          <div class="saved-ai-desc">${escapeHtml(ai.description||"—")}</div>
+          <div class="saved-ai-meta">
+            <span><strong>To:</strong> ${escapeHtml(ai.delegatedTo||"—")}</span>
+            <span><strong>Due:</strong> ${formatDate(ai.dueDate)}</span>
+          </div>
+        </div>`).join("")}</div>`;
     }
 
     function render() {
       const q = document.getElementById("search").value.trim().toLowerCase();
-
       const entries = getEntries()
-        .slice()
-        .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+        .slice().sort((a,b) => (b.date||"").localeCompare(a.date||""))
         .filter(item => {
-          const hay = [
-            item.date,
-            item.notes,
-            ...(Array.isArray(item.attendees) ? item.attendees : []),
-            ...(Array.isArray(item.actionItems) ? item.actionItems.map(ai => Object.values(ai).join(" ")) : [])
-          ].join(" ").toLowerCase();
-          return !q || hay.includes(q);
+          if (!q) return true;
+          const hay = [item.date, item.notes, ...(item.attendees||[]),
+            ...(item.actionItems||[]).map(ai => Object.values(ai).join(" "))].join(" ").toLowerCase();
+          return hay.includes(q);
         });
 
       savedEntries.innerHTML = "";
-
       if (!entries.length) {
-        savedEntries.innerHTML = `<div class="muted">No weekly notes found. Import a JSON file to begin.</div>`;
+        savedEntries.innerHTML = `<div class="muted">No entries yet. Add an entry above or import a JSON file.</div>`;
         return;
       }
 
       for (const item of entries) {
-        const attendeesText = Array.isArray(item.attendees) && item.attendees.length
-          ? item.attendees.map(escapeHtml).join(", ")
-          : "—";
-
-        const entry = document.createElement("article");
-        entry.className = "saved-entry";
-        entry.innerHTML = `
+        const attendeesText = item.attendees?.length ? item.attendees.map(escapeHtml).join(", ") : "—";
+        const article = document.createElement("article");
+        article.className = "saved-entry";
+        article.innerHTML = `
           <div class="saved-entry-head">
             <div class="saved-entry-meta">
-              <h3 style="margin:0;">${formatDate(item.date)}</h3>
-              <div class="saved-meta-row">
-                <div><strong>Attendees:</strong> ${attendeesText}</div>
-                <div><strong>Action Items:</strong> ${Array.isArray(item.actionItems) ? item.actionItems.length : 0}</div>
+              <h3>${formatDate(item.date)}</h3>
+              <div class="meta-pills">
+                <span><strong>Attendees:</strong> ${attendeesText}</span>
+                <span><strong>Action items:</strong> ${(item.actionItems||[]).length}</span>
               </div>
             </div>
-
-            <div class="actions">
-              <button class="btn-secondary" data-action="edit" data-id="${item.id}" type="button">Edit</button>
-              <button class="btn-secondary" data-action="delete" data-id="${item.id}" type="button">Delete</button>
+            <div class="row-actions">
+              <button class="btn" data-action="edit" data-id="${item.id}" type="button">Edit</button>
+              <button class="btn" data-action="delete" data-id="${item.id}" type="button">Delete</button>
             </div>
           </div>
-
           <div class="saved-entry-body">
             <section class="saved-section">
-              <h4 class="saved-section-title">Meeting Notes</h4>
-              <div class="saved-notes">${escapeHtml(item.notes || "—")}</div>
+              <p class="saved-section-title">Meeting Notes</p>
+              <div class="saved-notes">${escapeHtml(item.notes||"—")}</div>
             </section>
-
             <section class="saved-section">
-              <h4 class="saved-section-title">Action Items</h4>
+              <p class="saved-section-title">Action Items</p>
               ${renderActionItemsDisplay(item.actionItems)}
             </section>
-          </div>
-        `;
-        savedEntries.appendChild(entry);
+          </div>`;
+        savedEntries.appendChild(article);
       }
     }
 
     document.getElementById("saveBtn").addEventListener("click", () => {
-      const date = document.getElementById("date").value;
+      const date  = document.getElementById("date").value;
       const notes = document.getElementById("notes").value.trim();
       const attendees = getSelectedAttendees();
-
-      if (!date || !notes) {
-        alert("Please complete date and meeting notes.");
-        return;
-      }
-
+      if (!date || !notes) { alert("Please complete date and meeting notes."); return; }
       const entries = getEntries();
-
       if (editingId) {
         const idx = entries.findIndex(x => x.id === editingId);
-        if (idx >= 0) {
-          entries[idx] = {
-            ...entries[idx],
-            date,
-            notes,
-            attendees,
-            actionItems: currentActionItems
-          };
-        }
+        if (idx >= 0) entries[idx] = { ...entries[idx], date, notes, attendees, actionItems: currentActionItems };
       } else {
-        entries.push({
-          id: crypto.randomUUID(),
-          date,
-          notes,
-          attendees,
-          actionItems: currentActionItems
-        });
+        entries.push({ id: crypto.randomUUID(), date, notes, attendees, actionItems: currentActionItems });
       }
-
-      setEntries(entries);
-      clearForm();
-      render();
+      setEntries(entries); clearForm(); render();
     });
 
-    clearAiFormBtn.addEventListener("click", clearAIForm);
+    document.getElementById("clear-ai-form-btn").addEventListener("click", clearAIForm);
 
     addAiBtn.addEventListener("click", () => {
       const category = aiCategory.value;
-      const delegatedTo = aiDelegatedTo.value;
       const description = aiDescription.value.trim();
-      const dueDate = aiDueDate.value;
-      const status = aiStatus.value;
-
-      if (!category || !description) {
-        alert("Please select a category and provide an action item description.");
-        return;
-      }
-
+      if (!category || !description) { alert("Please select a category and provide a description."); return; }
+      const item = { category, delegatedTo: aiDelegatedTo.value, description, dueDate: aiDueDate.value, status: aiStatus.value };
       if (currentAIEditingId) {
         const idx = currentActionItems.findIndex(ai => ai.id === currentAIEditingId);
-        if (idx >= 0) {
-          currentActionItems[idx] = {
-            ...currentActionItems[idx],
-            category,
-            delegatedTo,
-            description,
-            dueDate,
-            status
-          };
-        }
+        if (idx >= 0) currentActionItems[idx] = { ...currentActionItems[idx], ...item };
       } else {
-        currentActionItems.push({
-          id: crypto.randomUUID(),
-          category,
-          delegatedTo,
-          description,
-          dueDate,
-          status
-        });
+        currentActionItems.push({ id: crypto.randomUUID(), ...item });
       }
-
-      clearAIForm();
-      renderCurrentActionItemsTable();
+      clearAIForm(); renderCurrentAITable();
     });
 
     document.getElementById("clearBtn").addEventListener("click", clearForm);
     document.getElementById("search").addEventListener("input", render);
 
     document.getElementById("exportBtn").addEventListener("click", () => {
-      const data = JSON.stringify(getEntries(), null, 2);
-      const blob = new Blob([data], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "geo-crew-weekly-catchup.json";
-      a.click();
-      URL.revokeObjectURL(url);
+      const blob = new Blob([JSON.stringify(getEntries(), null, 2)], { type: "application/json" });
+      const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "geo-crew-weekly-catchup.json" });
+      a.click(); URL.revokeObjectURL(a.href);
     });
 
-    document.getElementById("importBtn").addEventListener("click", () => {
-      document.getElementById("importFile").click();
-    });
+    document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
 
-    document.getElementById("importFile").addEventListener("change", async (event) => {
-      const file = event.target.files && event.target.files[0];
+    document.getElementById("importFile").addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
       if (!file) return;
-
       try {
-        const text = await file.text();
-        const parsed = JSON.parse(text);
-        if (!Array.isArray(parsed)) throw new Error("Invalid format");
-
-        const cleaned = parsed
-          .filter(item => item && typeof item === "object")
-          .map(item => ({
-            id: item.id || crypto.randomUUID(),
-            date: item.date || "",
-            notes: item.notes || "",
-            attendees: Array.isArray(item.attendees) ? item.attendees : [],
-            actionItems: Array.isArray(item.actionItems) ? item.actionItems.map(ai => ({
-              id: ai.id || crypto.randomUUID(),
-              category: ai.category || "",
-              description: ai.description || "",
-              delegatedTo: ai.delegatedTo || "",
-              dueDate: ai.dueDate || "",
-              status: ["Open", "Closed"].includes(ai.status) ? ai.status : "Open"
-            })) : []
-          }));
-
-        setEntries(cleaned);
-        clearForm();
-        render();
+        const parsed = JSON.parse(await file.text());
+        if (!Array.isArray(parsed)) throw new Error();
+        const cleaned = parsed.filter(x => x && typeof x === "object").map(item => ({
+          id: item.id || crypto.randomUUID(), date: item.date||"", notes: item.notes||"",
+          attendees: Array.isArray(item.attendees) ? item.attendees : [],
+          actionItems: Array.isArray(item.actionItems) ? item.actionItems.map(ai => ({
+            id: ai.id||crypto.randomUUID(), category: ai.category||"", description: ai.description||"",
+            delegatedTo: ai.delegatedTo||"", dueDate: ai.dueDate||"",
+            status: ["Open","Closed"].includes(ai.status) ? ai.status : "Open"
+          })) : []
+        }));
+        setEntries(cleaned); clearForm(); render();
         alert("JSON imported successfully.");
-      } catch {
-        alert("Could not import this JSON file.");
-      } finally {
-        event.target.value = "";
-      }
+      } catch { alert("Could not import this JSON file."); }
+      finally { e.target.value = ""; }
     });
 
-    savedEntries.addEventListener("click", (event) => {
-      const btn = event.target.closest("button[data-action]");
+    savedEntries.addEventListener("click", e => {
+      const btn = e.target.closest("button[data-action]");
       if (!btn) return;
-
       const { action, id } = btn.dataset;
       const entries = getEntries();
       const item = entries.find(x => x.id === id);
       if (!item) return;
-
-      if (action === "edit") {
-        fillForm(item);
-      }
-
-      if (action === "delete") {
-        const next = entries.filter(x => x.id !== id);
-        setEntries(next);
-        if (editingId === id) clearForm();
-        render();
-      }
+      if (action === "edit") fillForm(item);
+      if (action === "delete") { setEntries(entries.filter(x => x.id !== id)); if (editingId===id) clearForm(); render(); }
     });
 
-    currentActionItemsTableBody.addEventListener("click", (event) => {
-      const btn = event.target.closest("button[data-action]");
+    currentAIBody.addEventListener("click", e => {
+      const btn = e.target.closest("button[data-action]");
       if (!btn) return;
-
       const { action, id } = btn.dataset;
       const ai = currentActionItems.find(x => x.id === id);
       if (!ai) return;
-
-      if (action === "edit-ai") {
-        fillAIForm(ai);
-      }
-
+      if (action === "edit-ai") fillAIForm(ai);
       if (action === "delete-ai") {
         currentActionItems = currentActionItems.filter(x => x.id !== id);
         if (currentAIEditingId === id) clearAIForm();
-        renderCurrentActionItemsTable();
+        renderCurrentAITable();
       }
     });
 
     buildAttendeeChecklist();
     buildAIAssigneeList();
-    renderCurrentActionItemsTable();
+    renderCurrentAITable();
     render();
   </script>
 </body>
