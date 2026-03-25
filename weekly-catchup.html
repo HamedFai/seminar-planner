@@ -715,10 +715,28 @@
     document.getElementById("clearBtn").addEventListener("click", clearForm);
     document.getElementById("search").addEventListener("input", render);
 
+    // document.getElementById("exportBtn").addEventListener("click", () => {
+    //   const blob = new Blob([JSON.stringify(getEntries(), null, 2)], { type: "application/json" });
+    //   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "geo-crew-weekly-catchup.json" });
+    //   a.click(); URL.revokeObjectURL(a.href);
+    // });
+
     document.getElementById("exportBtn").addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(getEntries(), null, 2)], { type: "application/json" });
-      const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "geo-crew-weekly-catchup.json" });
-      a.click(); URL.revokeObjectURL(a.href);
+      const now = new Date();
+      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      const filename = `geo-crew-weekly-catchup-${today}.json`;
+    
+      const blob = new Blob([JSON.stringify(getEntries(), null, 2)], {
+        type: "application/json"
+      });
+    
+      const a = Object.assign(document.createElement("a"), {
+        href: URL.createObjectURL(blob),
+        download: filename
+      });
+    
+      a.click();
+      URL.revokeObjectURL(a.href);
     });
 
     document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
