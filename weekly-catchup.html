@@ -246,8 +246,8 @@
     }
 
     .ai-item-status.open {
-        background-color: #ffe0b2; /* Light orange */
-        color: #e65100; /* Dark orange */
+        background-color: #ffcdd2; /* Light red */
+        color: #c62828; /* Dark red */
     }
 
     .ai-item-status.closed {
@@ -598,7 +598,7 @@
           : "—";
 
         const actionItemsList = Array.isArray(item.actionItems) && item.actionItems.length
-          ? item.actionItems.map(ai => `<li><b>${escapeHtml(ai.category || 'N/A')}:</b> ${escapeHtml(ai.description || 'N/A')} (To: ${escapeHtml(ai.delegatedTo || 'N/A')}, Due: ${formatDate(ai.dueDate)}, Status: ${escapeHtml(ai.status || 'N/A')})</li>`).join('')
+          ? item.actionItems.map(ai => `<li><b>${escapeHtml(ai.category || 'N/A')}:</b> ${escapeHtml(ai.description || 'N/A')} (To: ${escapeHtml(ai.delegatedTo || 'N/A')}, Due: ${formatDate(ai.dueDate)}, Status: <span class="ai-item-status ${ai.status.toLowerCase()}">${escapeHtml(ai.status || 'N/A')}</span>)</li>`).join('')
           : '<span class="muted">No action items</span>';
 
         const tr = document.createElement("tr");
