@@ -36,7 +36,6 @@
       padding: 28px 20px 56px;
     }
 
-    /* ── Hero ── */
     .hero {
       background: var(--card);
       border: 1px solid var(--line);
@@ -86,7 +85,6 @@
     }
     .nav a:hover { background: #e0eaf7; }
 
-    /* ── Card ── */
     .card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -105,7 +103,6 @@
       flex-wrap: wrap;
     }
 
-    /* ── Summary stat pills ── */
     .stats-row {
       display: flex;
       gap: 10px;
@@ -124,23 +121,11 @@
       min-width: 110px;
     }
 
-    .stat-pill .stat-num {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--text);
-    }
-
-    .stat-pill .stat-label {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.3;
-    }
-
+    .stat-pill .stat-num { font-size: 22px; font-weight: 700; line-height: 1; color: var(--text); }
+    .stat-pill .stat-label { font-size: 12px; color: var(--muted); line-height: 1.3; }
     .stat-pill.open   .stat-num { color: #b91c1c; }
     .stat-pill.closed .stat-num { color: #15803d; }
 
-    /* ── Filters ── */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -196,7 +181,6 @@
     }
     .filter-clear:hover { color: #174fa8; }
 
-    /* ── Table ── */
     .table-wrap {
       width: 100%;
       overflow-x: auto;
@@ -232,18 +216,10 @@
     }
 
     th:hover { color: var(--text); }
-
-    th .sort-icon {
-      display: inline-block;
-      margin-left: 4px;
-      opacity: 0.4;
-      font-size: 10px;
-    }
-
+    th .sort-icon { display: inline-block; margin-left: 4px; opacity: 0.4; font-size: 10px; }
     th.sorted .sort-icon { opacity: 1; color: var(--accent); }
 
     tr:last-child td { border-bottom: 0; }
-
     tr:hover td { background: #f8fbff; }
 
     .status-badge {
@@ -271,22 +247,13 @@
       white-space: nowrap;
     }
 
-    .meeting-date-link {
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
-    }
-
     .overdue { color: #b91c1c; font-weight: 600; }
 
-    .empty {
-      text-align: center;
-      padding: 48px 20px;
-      color: var(--muted);
-    }
-
+    .empty { text-align: center; padding: 48px 20px; color: var(--muted); }
     .empty p { margin: 0 0 6px; font-size: 15px; }
     .empty small { font-size: 13px; }
+
+    .muted { color: var(--muted); font-size: 13px; }
 
     @media (max-width: 640px) {
       .wrap { padding: 14px 12px 40px; }
@@ -311,10 +278,8 @@
     </header>
 
     <section class="card">
-      <!-- Summary stats -->
       <div class="stats-row" id="statsRow"></div>
 
-      <!-- Filters -->
       <div class="filters">
         <input id="search" type="text" placeholder="Search action items…" style="flex: 1 1 200px;" />
         <select id="filterStatus" style="min-width:130px;">
@@ -333,7 +298,6 @@
         <input id="importFile" type="file" accept="application/json,.json" style="display:none;" />
       </div>
 
-      <!-- Table -->
       <div class="table-wrap">
         <table>
           <thead>
@@ -358,13 +322,11 @@
   <script>
     const storageKey = "geo-crew-weekly-catchup";
     const today = new Date(); today.setHours(0,0,0,0);
-
     let sortCol = "dueDate";
     let sortAsc = true;
 
     function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
         .replaceAll('"',"&quot;").replaceAll("'","&#39;");
     }
 
@@ -375,26 +337,19 @@
 
     function isOverdue(dueDate, status) {
       if (!dueDate || status === "Closed") return false;
-      const d = new Date(dueDate + "T00:00:00");
-      return d < today;
+      return new Date(dueDate + "T00:00:00") < today;
     }
 
     function getEntries() {
-      try {
-        const p = JSON.parse(localStorage.getItem(storageKey));
-        return Array.isArray(p) ? p : [];
-      } catch { return []; }
+      try { const p = JSON.parse(localStorage.getItem(storageKey)); return Array.isArray(p) ? p : []; }
+      catch { return []; }
     }
 
-    // Flatten all action items across all meetings
     function getAllActionItems() {
-      const entries = getEntries();
       const items = [];
-      for (const entry of entries) {
+      for (const entry of getEntries()) {
         if (!Array.isArray(entry.actionItems)) continue;
-        for (const ai of entry.actionItems) {
-          items.push({ ...ai, meetingDate: entry.date || "" });
-        }
+        for (const ai of entry.actionItems) items.push({ ...ai, meetingDate: entry.date || "" });
       }
       return items;
     }
@@ -405,23 +360,18 @@
 
       const catSel = document.getElementById("filterCategory");
       catSel.innerHTML = '<option value="">All Categories</option>';
-      categories.forEach(c => {
-        const o = document.createElement("option"); o.value = o.textContent = c; catSel.appendChild(o);
-      });
+      categories.forEach(c => { const o = document.createElement("option"); o.value = o.textContent = c; catSel.appendChild(o); });
 
       const asnSel = document.getElementById("filterAssignee");
       asnSel.innerHTML = '<option value="">All Assignees</option>';
-      assignees.forEach(a => {
-        const o = document.createElement("option"); o.value = o.textContent = a; asnSel.appendChild(o);
-      });
+      assignees.forEach(a => { const o = document.createElement("option"); o.value = o.textContent = a; asnSel.appendChild(o); });
     }
 
     function renderStats(items) {
-      const total  = items.length;
-      const open   = items.filter(i => i.status === "Open").length;
-      const closed = items.filter(i => i.status === "Closed").length;
+      const total   = items.length;
+      const open    = items.filter(i => i.status === "Open").length;
+      const closed  = items.filter(i => i.status === "Closed").length;
       const overdue = items.filter(i => isOverdue(i.dueDate, i.status)).length;
-
       document.getElementById("statsRow").innerHTML = `
         <div class="stat-pill">
           <div><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
@@ -432,10 +382,9 @@
         <div class="stat-pill closed">
           <div><div class="stat-num">${closed}</div><div class="stat-label">Closed</div></div>
         </div>
-        <div class="stat-pill" style="${overdue > 0 ? 'border-color:#fca5a5;' : ''}">
-          <div><div class="stat-num" style="${overdue > 0 ? 'color:#b91c1c;' : ''}">${overdue}</div><div class="stat-label">Overdue</div></div>
-        </div>
-      `;
+        <div class="stat-pill" style="${overdue > 0 ? "border-color:#fca5a5;" : ""}">
+          <div><div class="stat-num" style="${overdue > 0 ? "color:#b91c1c;" : ""}">${overdue}</div><div class="stat-label">Overdue</div></div>
+        </div>`;
     }
 
     function getFilteredSorted() {
@@ -445,23 +394,16 @@
       const assignee = document.getElementById("filterAssignee").value;
 
       let items = getAllActionItems();
-
-      if (q) items = items.filter(i =>
-        [i.description, i.category, i.delegatedTo, i.meetingDate, i.dueDate, i.status]
-          .join(" ").toLowerCase().includes(q)
-      );
+      if (q) items = items.filter(i => [i.description,i.category,i.delegatedTo,i.meetingDate,i.dueDate,i.status].join(" ").toLowerCase().includes(q));
       if (status)   items = items.filter(i => i.status === status);
       if (category) items = items.filter(i => i.category === category);
       if (assignee) items = items.filter(i => i.delegatedTo === assignee);
 
       items.sort((a, b) => {
-        let av = (a[sortCol] || "").toLowerCase();
-        let bv = (b[sortCol] || "").toLowerCase();
-        if (av < bv) return sortAsc ? -1 : 1;
-        if (av > bv) return sortAsc ? 1 : -1;
-        return 0;
+        const av = (a[sortCol] || "").toLowerCase();
+        const bv = (b[sortCol] || "").toLowerCase();
+        return av < bv ? (sortAsc ? -1 : 1) : av > bv ? (sortAsc ? 1 : -1) : 0;
       });
-
       return items;
     }
 
@@ -471,13 +413,7 @@
       tbody.innerHTML = "";
 
       if (!items.length) {
-        tbody.innerHTML = `
-          <tr><td colspan="6">
-            <div class="empty">
-              <p>No action items found.</p>
-              <small>Try adjusting your filters, or add entries in the Weekly Catch-up.</small>
-            </div>
-          </td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty"><p>No action items found.</p><small>Try adjusting your filters, or add entries in the Weekly Catch-up.</small></div></td></tr>`;
         document.getElementById("resultCount").textContent = "";
         return;
       }
@@ -486,13 +422,12 @@
         const over = isOverdue(ai.dueDate, ai.status);
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td class="meeting-date-link">${escapeHtml(formatDate(ai.meetingDate))}</td>
+          <td style="color:var(--muted);font-size:12px;white-space:nowrap;">${escapeHtml(formatDate(ai.meetingDate))}</td>
           <td><span class="category-badge">${escapeHtml(ai.category || "—")}</span></td>
           <td>${escapeHtml(ai.description || "—")}</td>
           <td>${escapeHtml(ai.delegatedTo || "—")}</td>
           <td class="${over ? "overdue" : ""}">${escapeHtml(formatDate(ai.dueDate))}${over ? " ⚠" : ""}</td>
-          <td><span class="status-badge ${(ai.status||"Open").toLowerCase()}">${escapeHtml(ai.status||"Open")}</span></td>
-        `;
+          <td><span class="status-badge ${(ai.status||"Open").toLowerCase()}">${escapeHtml(ai.status||"Open")}</span></td>`;
         tbody.appendChild(tr);
       }
 
@@ -510,40 +445,31 @@
       render();
     }
 
-    // Sort on header click
     document.querySelectorAll("th[data-col]").forEach(th => {
       th.addEventListener("click", () => {
         const col = th.dataset.col;
-        if (sortCol === col) { sortAsc = !sortAsc; }
-        else { sortCol = col; sortAsc = true; }
-
-        document.querySelectorAll("th[data-col]").forEach(h => {
-          h.classList.remove("sorted");
-          h.querySelector(".sort-icon").textContent = "↕";
-        });
+        sortAsc = sortCol === col ? !sortAsc : true;
+        sortCol = col;
+        document.querySelectorAll("th[data-col]").forEach(h => { h.classList.remove("sorted"); h.querySelector(".sort-icon").textContent = "↕"; });
         th.classList.add("sorted");
         th.querySelector(".sort-icon").textContent = sortAsc ? "↑" : "↓";
         render();
       });
     });
 
-    // Filters
     ["search","filterStatus","filterCategory","filterAssignee"].forEach(id => {
       document.getElementById(id).addEventListener("input", render);
     });
 
     document.getElementById("clearFilters").addEventListener("click", () => {
-      document.getElementById("search").value = "";
-      document.getElementById("filterStatus").value = "";
-      document.getElementById("filterCategory").value = "";
-      document.getElementById("filterAssignee").value = "";
+      ["search","filterStatus","filterCategory","filterAssignee"].forEach(id => {
+        const el = document.getElementById(id);
+        el.tagName === "INPUT" ? (el.value = "") : (el.value = "");
+      });
       render();
     });
 
-    // Import JSON
-    document.getElementById("importBtn").addEventListener("click", () => {
-      document.getElementById("importFile").click();
-    });
+    document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importFile").click());
 
     document.getElementById("importFile").addEventListener("change", async (e) => {
       const file = e.target.files?.[0];
@@ -552,16 +478,11 @@
         const parsed = JSON.parse(await file.text());
         if (!Array.isArray(parsed)) throw new Error();
         const cleaned = parsed.filter(x => x && typeof x === "object").map(item => ({
-          id: item.id || crypto.randomUUID(),
-          date: item.date || "",
-          notes: item.notes || "",
+          id: item.id || crypto.randomUUID(), date: item.date||"", notes: item.notes||"",
           attendees: Array.isArray(item.attendees) ? item.attendees : [],
           actionItems: Array.isArray(item.actionItems) ? item.actionItems.map(ai => ({
-            id: ai.id || crypto.randomUUID(),
-            category: ai.category || "",
-            description: ai.description || "",
-            delegatedTo: ai.delegatedTo || "",
-            dueDate: ai.dueDate || "",
+            id: ai.id||crypto.randomUUID(), category: ai.category||"", description: ai.description||"",
+            delegatedTo: ai.delegatedTo||"", dueDate: ai.dueDate||"",
             status: ["Open","Closed"].includes(ai.status) ? ai.status : "Open"
           })) : []
         }));
@@ -572,7 +493,6 @@
       finally { e.target.value = ""; }
     });
 
-    // Set default sort icon
     document.querySelector(`th[data-col="${sortCol}"]`).classList.add("sorted");
     document.querySelector(`th[data-col="${sortCol}"] .sort-icon`).textContent = "↑";
 
