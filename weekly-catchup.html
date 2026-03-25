@@ -485,7 +485,7 @@
     <section class="hero">
       <div class="eyebrow">Geo Crew</div>
       <h1>Weekly Catch-up</h1>
-      <p class="sub">Record key discussion points, attendees, meeting notes, and action items in one place.</p>
+      <!-- <p class="sub">Record key discussion points, attendees, meeting notes, and action items.</p> -->
       <div class="nav">
         <a href="index.html">Home</a>
         <a href="seminars.html">Seminar Planner</a>
@@ -496,7 +496,7 @@
       <div class="section-head">
         <div>
           <h2 style="margin-bottom:6px;">Add Weekly Notes</h2>
-          <p class="helper">Action items stay inside the same meeting entry and are imported/exported in one JSON file.</p>
+          <!-- <p class="helper">Action items stay inside the same meeting entry and are imported/exported in one JSON file.</p> -->
         </div>
       </div>
 
@@ -512,7 +512,7 @@
           <div class="panel">
             <div class="field">
               <label>Attendees</label>
-              <p class="helper">Select everyone who joined this catch-up.</p>
+              <!-- <p class="helper">Select everyone who joined this catch-up.</p> -->
               <div id="attendeeList" class="checklist"></div>
             </div>
           </div>
@@ -531,7 +531,7 @@
             <div class="section-head">
               <div>
                 <h3 style="margin-bottom:6px;">Action Item Details</h3>
-                <p class="helper">Add one or more action items before saving the entry.</p>
+                <!-- <p class="helper">Add one or more action items before saving the entry.</p> -->
               </div>
             </div>
 
@@ -540,11 +540,12 @@
                 <label for="ai-category">Category</label>
                 <select id="ai-category">
                   <option value="">Select Category</option>
-                  <option>General admin</option>
-                  <option>Rome lab</option>
-                  <option>Data platform</option>
-                  <option>Offshore ops</option>
-                  <option>System & procedures</option>
+                  <option>General Admin</option>
+                  <option>Rome Laboratory</option>
+                  <option>Data Platform</option>
+                  <option>Offshore Ops</option>
+                  <option>System & Procedures</option>
+                  <option>Other</option>
                 </select>
               </div>
 
@@ -573,8 +574,8 @@
             </div>
 
             <div class="toolbar" style="margin-top: 16px;">
-              <button class="btn-secondary" id="add-ai-btn" type="button">Add Action Item</button>
-              <button class="btn-secondary" id="clear-ai-form-btn" type="button">Clear Action Item Fields</button>
+              <button class="btn-secondary" id="add-ai-btn" type="button">Add Item</button>
+              <button class="btn-secondary" id="clear-ai-form-btn" type="button">Clear Item</button>
             </div>
 
             <h4 style="margin-top: 22px;">Action Items for Current Note</h4>
@@ -591,7 +592,7 @@
                   </tr>
                 </thead>
                 <tbody id="currentActionItemsTableBody">
-                  <tr><td colspan="6" class="muted">No action items added yet.</td></tr>
+                  <tr><td colspan="5" class="muted">No action items added yet.</td></tr>
                 </tbody>
               </table>
             </div>
@@ -608,8 +609,8 @@
     <section class="card">
       <div class="section-head">
         <div>
-          <h2 style="margin-bottom:6px;">Saved Weekly Notes</h2>
-          <p class="helper">Saved and imported entries appear below with meeting notes and action items shown in separate, equal-width panels.</p>
+          <h2 style="margin-bottom:6px;">Record of Weekly Notes & Action Items</h2>
+          <!-- <p class="helper">Saved and imported entries appear below with meeting notes and action items shown in separate, equal-width panels.</p> -->
         </div>
       </div>
 
