@@ -14,6 +14,7 @@
       --accent: #1f5fbf;
       --accent-soft: #eaf2ff;
       --shadow: 0 10px 28px rgba(18, 40, 76, 0.08);
+      --shadow-soft: 0 6px 18px rgba(18, 40, 76, 0.05);
       --radius: 18px;
     }
 
@@ -27,12 +28,12 @@
     }
 
     .wrap {
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 32px 18px 48px;
     }
 
-    .hero, .card {
+    .hero, .card, .panel {
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 24px;
@@ -48,6 +49,12 @@
       padding: 22px;
       border-radius: var(--radius);
       margin-bottom: 22px;
+    }
+
+    .panel {
+      padding: 18px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
     }
 
     .eyebrow {
@@ -121,7 +128,7 @@
     button.btn-primary {
       background: var(--accent);
       color: white;
-      box-shadow: 0 8px 18px rgba(31, 95, 191, 0.18);
+      box-shadow: 0 8px 18px rgba(31, 95, 191, 0.22);
     }
 
     .btn-secondary,
@@ -139,39 +146,32 @@
       margin-bottom: 14px;
     }
 
-    .section-block {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-      padding: 18px;
-      margin-top: 18px;
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
-    .section-title {
-      margin: 0 0 14px;
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    .notes-layout {
+    .entry-layout {
       display: grid;
-      grid-template-columns: minmax(220px, 260px) minmax(0, 1fr);
-      gap: 16px;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 18px;
       align-items: start;
+      margin-bottom: 22px;
     }
 
-    .meta-panel {
+    .entry-meta,
+    .entry-main {
       display: grid;
       gap: 16px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
     }
 
     .field {
@@ -181,20 +181,6 @@
     }
 
     .field label {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .field-card {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fbfdff;
-      padding: 14px;
-    }
-
-    .field-card label {
-      display: block;
-      margin-bottom: 8px;
       font-size: 14px;
       font-weight: 700;
     }
@@ -209,27 +195,33 @@
       color: var(--text);
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       outline: none;
-      border-color: #9ab8ea;
+      border-color: #a8c4f3;
       box-shadow: 0 0 0 4px rgba(31, 95, 191, 0.08);
     }
 
     textarea {
-      min-height: 160px;
+      min-height: 220px;
       resize: vertical;
       line-height: 1.5;
     }
 
+    .notes-panel textarea {
+      min-height: 312px;
+    }
+
     .checklist {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px 16px;
+      grid-template-columns: 1fr;
+      gap: 10px;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 14px;
       background: #fbfdff;
-      max-height: 250px;
+      max-height: 280px;
       overflow: auto;
     }
 
@@ -249,6 +241,14 @@
       font-weight: 500;
       font-size: 14px;
     }
+
+    .action-item-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .full { grid-column: 1 / -1; }
 
     .table-wrap {
       overflow-x: auto;
@@ -292,7 +292,12 @@
       font-size: 13px;
     }
 
-    .full { grid-column: 1 / -1; }
+    .helper {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
 
     .ai-item-status {
       display: inline-block;
@@ -314,34 +319,29 @@
       color: #2e7d32;
     }
 
-    .split-header {
+    .surface-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
       margin-bottom: 14px;
     }
 
-    .split-header p {
-      margin: 0;
-    }
-
-    @media (max-width: 900px) {
-      .notes-layout {
+    @media (max-width: 920px) {
+      .entry-layout {
         grid-template-columns: 1fr;
       }
 
-      .meta-panel {
-        grid-template-columns: 1fr;
+      .notes-panel textarea {
+        min-height: 180px;
       }
     }
 
     @media (max-width: 820px) {
       .wrap { padding: 18px 14px 36px; }
       .hero, .card { padding: 18px; }
-      .form-grid,
-      .checklist { grid-template-columns: 1fr; }
+      .action-item-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -350,7 +350,7 @@
     <section class="hero">
       <div class="eyebrow">Geo Crew</div>
       <h1>Weekly Catch-up</h1>
-      <p class="sub">Record key discussion points and action items from each weekly meeting.</p>
+      <p class="sub">Record key discussion points, attendees, and follow-up action items in one place.</p>
       <div class="nav">
         <a href="index.html">Home</a>
         <a href="seminars.html">Seminar Planner</a>
@@ -358,45 +358,51 @@
     </section>
 
     <section class="card">
-      <div class="split-header">
+      <div class="section-head">
         <div>
-          <h2 style="margin-bottom: 6px;">Add Weekly Notes</h2>
-          <p class="muted">Capture the meeting summary first, then add action items underneath.</p>
+          <h2 style="margin-bottom:6px;">Add Weekly Notes</h2>
+          <p>Capture the meeting summary first, then add any action items tied to this note.</p>
         </div>
       </div>
 
-      <div class="section-block">
-        <div class="section-title">Meeting Details</div>
-
-        <div class="notes-layout">
-          <div class="meta-panel">
-            <div class="field-card">
-              <label for="date">Date</label>
+      <div class="entry-layout">
+        <div class="entry-meta">
+          <div class="panel">
+            <div class="field">
+              <label for="date">Meeting Date</label>
               <input id="date" type="date" />
             </div>
           </div>
 
-          <div class="field">
-            <label>Attendees</label>
-            <div id="attendeeList" class="checklist"></div>
+          <div class="panel">
+            <div class="field">
+              <label>Attendees</label>
+              <p class="helper">Select everyone who joined this catch-up.</p>
+              <div id="attendeeList" class="checklist"></div>
+            </div>
           </div>
         </div>
 
-        <div class="field" style="margin-top: 16px;">
-          <label for="notes">Meeting Notes</label>
-          <textarea id="notes" placeholder="Add the weekly meeting notes here"></textarea>
+        <div class="entry-main">
+          <div class="panel notes-panel">
+            <div class="field">
+              <label for="notes">Meeting Notes</label>
+              <p class="helper">Summarize discussion points, decisions, blockers, and updates.</p>
+              <textarea id="notes" placeholder="Add the weekly meeting notes here"></textarea>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="section-block">
-        <div class="split-header">
+      <div class="panel">
+        <div class="section-head">
           <div>
-            <div class="section-title" style="margin-bottom: 6px;">Action Items</div>
-            <p class="muted">Add one or more action items linked to this meeting note.</p>
+            <h3 style="margin-bottom:6px;">Add Action Item</h3>
+            <p>Create follow-up tasks linked to the current meeting note.</p>
           </div>
         </div>
 
-        <div class="form-grid">
+        <div class="action-item-grid">
           <div class="field">
             <label for="ai-category">Category</label>
             <select id="ai-category">
@@ -438,13 +444,13 @@
           <button class="btn-secondary" id="clear-ai-form-btn" type="button">Clear Action Item Fields</button>
         </div>
 
-        <h4 style="margin-top: 22px; margin-bottom: 14px;">Action Items for Current Note</h4>
+        <h4 style="margin-top: 24px; margin-bottom: 14px;">Action Items for Current Note</h4>
         <div class="table-wrap" style="margin-bottom: 8px;">
           <table id="currentActionItemsTable">
             <thead>
               <tr>
                 <th style="min-width: 120px;">Category</th>
-                <th style="min-width: 220px;">Action Item</th>
+                <th style="min-width: 200px;">Action Item</th>
                 <th style="min-width: 120px;">Delegated To</th>
                 <th style="min-width: 100px;">Due Date</th>
                 <th style="min-width: 80px;">Status</th>
@@ -465,10 +471,10 @@
     </section>
 
     <section class="card">
-      <div class="split-header">
+      <div class="surface-bar">
         <div>
-          <h2 style="margin-bottom: 6px;">Saved Weekly Notes</h2>
-          <p class="muted">Export or import one JSON file containing both meeting notes and action items.</p>
+          <h2 style="margin:0 0 6px;">Saved Weekly Notes</h2>
+          <p class="helper" style="margin:0;">Export or import one JSON file containing both notes and action items.</p>
         </div>
       </div>
 
@@ -621,7 +627,6 @@
 
     function renderCurrentActionItemsTable() {
       currentActionItemsTableBody.innerHTML = "";
-
       if (!currentActionItems.length) {
         currentActionItemsTableBody.innerHTML = '<tr><td colspan="6" class="muted">No action items added yet.</td></tr>';
         return;
@@ -634,7 +639,7 @@
           <td>${escapeHtml(ai.description || "—")}</td>
           <td>${escapeHtml(ai.delegatedTo || "—")}</td>
           <td>${formatDate(ai.dueDate)}</td>
-          <td><span class="ai-item-status ${String(ai.status || "Open").toLowerCase()}">${escapeHtml(ai.status || "—")}</span></td>
+          <td><span class="ai-item-status ${ai.status.toLowerCase()}">${escapeHtml(ai.status || "—")}</span></td>
           <td>
             <div class="actions">
               <button class="btn-secondary" data-action="edit-ai" data-id="${ai.id}">Edit</button>
@@ -682,7 +687,6 @@
             ...(Array.isArray(item.attendees) ? item.attendees : []),
             ...(Array.isArray(item.actionItems) ? item.actionItems.map(ai => Object.values(ai).join(" ")) : [])
           ].join(" ").toLowerCase();
-
           return !q || hay.includes(q);
         });
 
@@ -708,7 +712,7 @@
           if (closedCount > 0) parts.push(`<span class="ai-item-status closed">${closedCount} Closed</span>`);
 
           aiSummary = parts.join(" / ");
-          if (!parts.length) aiSummary = `${item.actionItems.length} Total`;
+          if (parts.length === 0) aiSummary = `${item.actionItems.length} Total`;
         }
 
         const tr = document.createElement("tr");
@@ -835,16 +839,14 @@
             date: item.date || "",
             notes: item.notes || "",
             attendees: Array.isArray(item.attendees) ? item.attendees : [],
-            actionItems: Array.isArray(item.actionItems)
-              ? item.actionItems.map(ai => ({
-                  id: ai.id || crypto.randomUUID(),
-                  category: ai.category || "",
-                  description: ai.description || "",
-                  delegatedTo: ai.delegatedTo || "",
-                  dueDate: ai.dueDate || "",
-                  status: ["Open", "Closed"].includes(ai.status) ? ai.status : "Open"
-                }))
-              : []
+            actionItems: Array.isArray(item.actionItems) ? item.actionItems.map(ai => ({
+              id: ai.id || crypto.randomUUID(),
+              category: ai.category || "",
+              description: ai.description || "",
+              delegatedTo: ai.delegatedTo || "",
+              dueDate: ai.dueDate || "",
+              status: ["Open", "Closed"].includes(ai.status) ? ai.status : "Open"
+            })) : []
           }));
 
         setEntries(cleaned);
